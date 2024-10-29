@@ -2,21 +2,27 @@ import {Locator, Page} from "@playwright/test";
 
 export class SubscriptionCard {
     private page: Page;
-    private subscriptionName: string;
-    private baseSelector = `//section[contains(@class, 'pricingPlanCard')]`
+    private baseSelector: string;
 
     constructor(page: Page, subscriptionName: string) {
         this.page = page;
-        this.subscriptionName = subscriptionName;
+        this.baseSelector = `//h4[contains(text(), '${subscriptionName}')]/ancestor::div[contains(@class, 'gridItem')]`;
     }
 
-    // Геттер для заголовка карточки
     get title(): Locator {
-        return this.page.locator(`${this.baseSelector}//h4[contains(text(), '${this.subscriptionName}')]`);
+        return this.page.locator(`${this.baseSelector}//h4`);
     }
 
     get priceTag() {
-        return this.page.locator(`${this.baseSelector}//h4[contains(text(), '${this.subscriptionName}')]/ancestor::div[contains(@class, 'gridItem')]//h3`);
+        return this.page.locator(`${this.baseSelector}//h3`);
+    }
+
+    get navButton() {
+        return this.page.locator(`${this.baseSelector}//nav`)
+    }
+
+    get self() {
+        return this.page.locator(`${this.baseSelector}/section`)
     }
 
 }
