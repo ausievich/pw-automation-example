@@ -21,8 +21,4 @@ export class SubscriptionCard {
         return this.page.locator(`${this.baseSelector}//nav`)
     }
 
-    get self() {
-        return this.page.locator(`${this.baseSelector}/section`)
-    }
-
 }

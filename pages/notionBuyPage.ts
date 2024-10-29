@@ -1,5 +1,6 @@
 import {Page} from "@playwright/test";
 import {SubscriptionCard} from "../components/subscriptionCard";
+import {CurrencyPicker} from "../components/currencyPicker";
 
 export type CardName = "Free" | "Plus" | "Enterprise" | "Business";
 export type TabName = "yearly" | "monthly";
@@ -16,7 +17,6 @@ export class NotionBuyPage {
     }
 
     getTabByName(name: TabName) {
-        //label[contains(@class, 'BillingIntervalToggle')]//span[contains(text(), 'yearly')]
         return this.page.locator(`//label[contains(@class, 'BillingIntervalToggle')]//span[contains(text(), '${name}')]`)
     }
 
@@ -24,20 +24,9 @@ export class NotionBuyPage {
         return new SubscriptionCard(this.page, name);
     }
 
-    get freeSubscriptionCard() {
-        return new SubscriptionCard(this.page, 'Free')
-    }
-
-    get plusSubscriptionCard() {
-        return new SubscriptionCard(this.page, 'Plus')
-    }
-
-    get businessSubscriptionCard() {
-        return new SubscriptionCard(this.page, 'Business')
-    }
-
-    get enterpriseSubscriptionCard() {
-        return new SubscriptionCard(this.page, 'Enterprise')
+    getCurrencyPicker() {
+        return new CurrencyPicker(this.page);
     }
 
 }
+

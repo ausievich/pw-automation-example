@@ -14,6 +14,7 @@ test.describe('Buy page tests', () => {
     const notionBuyPage = new NotionBuyPage(page)
     const heading = notionBuyPage.heading;
     const headingContent = await heading.textContent();
+
     expect(headingContent).toBe(expectedValue);
 
   });
@@ -24,28 +25,37 @@ test.describe('Buy page tests', () => {
     const notionBuyPage = new NotionBuyPage(page)
     const freeSubscriptionCard = notionBuyPage.getCardByName('Free');
     const cardTitle = await freeSubscriptionCard.title.textContent();
+
     expect(cardTitle).toBe(expectedValue);
   });
 
+  // Можно попробовать добавить параметризацию
   test('Check Free-subscription card price', async ({ page }) => {
     const expectedValue: string = '€0';
 
     const notionBuyPage = new NotionBuyPage(page)
     const freeSubscriptionCard = notionBuyPage.getCardByName('Free');
-    const cardPrice = await freeSubscriptionCard.priceTag.textContent();
+    const currencyPicker = notionBuyPage.getCurrencyPicker();
 
+    await currencyPicker.open()
+    await currencyPicker.clickOnCurrency('EUR');
+
+    const cardPrice = await freeSubscriptionCard.priceTag.textContent();
     expect(cardPrice).toBe(expectedValue);
 
-    // Можно попробовать добавить параметризацию
   });
 
-  test('Check Plus-subscription card price', async ({ page }) => {
+  test.only('Check Plus-subscription card price', async ({ page }) => {
     const expectedValue: string = '€9.50';
 
     const notionBuyPage = new NotionBuyPage(page)
-    const plusSubscriptionCard = notionBuyPage.getCardByName('Plus');
-    const cardPrice = await plusSubscriptionCard.priceTag.textContent();
+    const currencyPicker = notionBuyPage.getCurrencyPicker();
+    const freeSubscriptionCard = notionBuyPage.getCardByName('Plus');
 
+    await currencyPicker.open()
+    await currencyPicker.clickOnCurrency('EUR');
+
+    const cardPrice = await freeSubscriptionCard.priceTag.textContent();
     expect(cardPrice).toBe(expectedValue);
 
   });
