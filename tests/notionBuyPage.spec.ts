@@ -1,5 +1,5 @@
-import { test, expect, Page, Locator } from '@playwright/test';
-import {NotionBuyPage, CardName, TabName} from "../pages/notionBuyPage";
+import { test, expect } from '@playwright/test';
+import {NotionBuyPage, CardName } from "../pages/notionBuyPage";
 
 
 test.beforeEach(async ({ page }) => {
@@ -45,7 +45,7 @@ test.describe('Buy page tests', () => {
 
   });
 
-  test.only('Check Plus-subscription card price', async ({ page }) => {
+  test('Check Plus-subscription card price', async ({ page }) => {
     const expectedValue: string = '€9.50';
 
     const notionBuyPage = new NotionBuyPage(page)
@@ -65,9 +65,11 @@ test.describe('Buy page tests', () => {
 
     const notionBuyPage = new NotionBuyPage(page)
     const businessSubscriptionCard = notionBuyPage.getCardByName('Business');
-
+    const currencyPicker = notionBuyPage.getCurrencyPicker();
     const monthlyTab = notionBuyPage.getTabByName('monthly')
 
+    await currencyPicker.open()
+    await currencyPicker.clickOnCurrency('EUR');
     await monthlyTab.click()
 
     const cardPrice = await businessSubscriptionCard.priceTag.textContent();
@@ -80,9 +82,11 @@ test.describe('Buy page tests', () => {
 
     const notionBuyPage = new NotionBuyPage(page)
     const businessSubscriptionCard = notionBuyPage.getCardByName('Business');
-
+    const currencyPicker = notionBuyPage.getCurrencyPicker();
     const yearlyTab = notionBuyPage.getTabByName('yearly')
 
+    await currencyPicker.open()
+    await currencyPicker.clickOnCurrency('EUR');
     await yearlyTab.click()
 
     const cardPrice = await businessSubscriptionCard.priceTag.textContent();
