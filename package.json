@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run tests": "npx playwright test --headed"
+    "run tests": "npx playwright test tests/notionBuyPage.spec.ts --headed"
   },
   "keywords": [],
   "author": "",
