@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
-import {JetbrainsBuyPage, CardName } from "../pages/JetbrainsBuyPage";
+import {JetbrainsBuyPage, CardName, TabName } from "../pages/JetbrainsBuyPage";
+
 
 test.beforeEach(async ({ page, context }) => {
   await context.addCookies([
@@ -73,32 +74,23 @@ test.describe('Buy page tests', () => {
     });
   });
 
-  test.only('Toggle subscription interval', async ({ page, context }) => {
-    const buyPage = new JetbrainsBuyPage(page)
-
-    await buyPage.clickTabByName("For Individual Use");
 
 
-    await page.pause();
-  });
 
+
+  // [
+  //   { tabName: 'For Individual Use', priceRegex: /.*599\.00.*/ },
+  //   { tabName: 'For Organizations', priceRegex: /.*599\.00.*/ },
+  // ].forEach(({ tabName, urlRegex, priceRegex }: { tabName: TabName, urlRegex: RegExp, priceRegex: RegExp }) => {
+  //   test.only(`Toggle tabs: ${tabName}`, async ({ page }) => {
+  //     const buyPage = new JetbrainsBuyPage(page)
   //
-  // test('Toggle subscription interval: yearly', async ({ page }) => {
-  //   const expectedValue: string = '€14';
+  //     await buyPage.clickTabByName(tabName);
+  //     await buyPage.clickIntervalByName('Monthly billing')
+  //     await buyPage.clickIntervalByName('Yearly billing');
   //
-  //   const notionBuyPage = new NotionBuyPage(page)
-  //   const businessSubscriptionCard = notionBuyPage.getCardByName('Business');
-  //   const currencyPicker = notionBuyPage.getCurrencyPicker();
-  //   const yearlyTab = notionBuyPage.getTabByName('yearly')
-  //
-  //   await currencyPicker.open()
-  //   await currencyPicker.clickOnCurrency('EUR');
-  //   await yearlyTab.click()
-  //
-  //   const cardPrice = await businessSubscriptionCard.priceTag.textContent();
-  //   expect(cardPrice).toBe(expectedValue);
-  //
-  // });
+  //   });
+  // })
 
 })
 

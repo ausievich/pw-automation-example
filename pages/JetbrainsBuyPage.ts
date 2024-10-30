@@ -2,7 +2,8 @@ import {Page} from "@playwright/test";
 import {JetbrainsProductCard} from "../components/JetbrainsProductCard";
 
 export type CardName = "IntelliJ IDEA Ultimate" | "All Products Pack";
-export type TabName = "For Organizations" | "For Individual Use" | "Special Categories" | "Monthly" | "Yearly";
+export type TabName = "For Organizations" | "For Individual Use" | "Special Categories";
+export type Interval = "Monthly billing" | "Yearly billing"
 
 export class JetbrainsBuyPage {
     protected page: Page;
@@ -20,9 +21,16 @@ export class JetbrainsBuyPage {
 
     }
 
+    async clickIntervalByName(name: Interval) {
+        await this.page.locator(`//div[@class='wt-css-content-switcher__block']//*[@data-test="adaptive-switcher__switcher"]//*[contains(text(), '${name}')]`).click()
+
+    }
+
     getCardByName(name: CardName) {
         return new JetbrainsProductCard(this.page, name);
     }
+
+
 
 
 }
