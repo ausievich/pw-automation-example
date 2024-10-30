@@ -41,6 +41,31 @@ export class JetbrainsProductCard {
         await this.buyButton.click()
     }
 
+    async clickLinkByName(name: string){
+        await this.page.locator(`${this.baseSelector}//a[contains(text(), '${name}')]`).click()
+    }
 
+    get pricesBlock() {
+        return new PricesBlock(this.page, this.baseSelector);
+    }
+
+}
+
+export class PricesBlock {
+    private page: Page;
+    private baseSelector: string;
+
+    constructor(page: Page, cardSelector: string) {
+        this.page = page;
+        this.baseSelector = `${cardSelector}//div[@data-test="product-price"]/../..`;
+    }
+
+    get productPrice() {
+        return this.page.locator(`${this.baseSelector}//div[@data-test="product-price"]`)
+    }
+
+    async getProductPriceValue() {
+        return await this.page.locator(`${this.baseSelector}//div[@data-test="product-price"]`).textContent();
+    }
 
 }

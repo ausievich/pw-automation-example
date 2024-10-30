@@ -8,69 +8,63 @@ test.beforeEach(async ({ page }) => {
 
 test.describe('Buy page tests', () => {
 
-  test('Check heading content', async ({ page }) => {
-    const expectedValue: string = 'Subscription Options and Pricing';
+  [
+    { cardName: 'IntelliJ IDEA Ultimate', priceRegex: /.*599\.00.*/ },
+    { cardName: 'All Products Pack', priceRegex: /.*779\.00.*/ },
+  ].forEach(({ cardName, priceRegex }: { cardName: CardName, priceRegex: RegExp }) => {
+    test.only(`Check card product price: ${cardName}`, async ({page}) => {
+      const buyPage = new JetbrainsBuyPage(page);
+      const card = buyPage.getCardByName(cardName);
+      const productPrice = await card.pricesBlock.getProductPriceValue();
 
-    const buyPage = new JetbrainsBuyPage(page);
-    const heading = buyPage.heading;
-    const headingContent = await heading.textContent();
+      expect(productPrice).toMatch(priceRegex)
 
-    expect(headingContent).toBe(expectedValue);
-
-  });
-
-  test('Check Free-subscription card title', async ({ page }) => {
-    const expectedValue: string = 'IntelliJ IDEA Ultimate';
-
-    const buyPage = new JetbrainsBuyPage(page);
-    const ideaCard = buyPage.getCardByName('IntelliJ IDEA Ultimate');
-    const cardTitle = await ideaCard.title.textContent();
-
-    expect(cardTitle).toBe(expectedValue);
-  });
+    });
+  })
 
 
   test('Click on buy button', async ({ page }) => {
+    const urlRegex = /.*www\.jetbrains\.com\/shop\/customer.*/;
 
     const buyPage = new JetbrainsBuyPage(page)
     const ideaCard = buyPage.getCardByName('IntelliJ IDEA Ultimate');
 
     await ideaCard.buyButton.click()
 
-    await expect(page).toHaveURL(/.*www\.jetbrains\.com\/shop\/customer.*/)
-
+    await expect(page).toHaveURL(urlRegex)
   });
 
-  test.skip('Check IDEA card price', async ({ page }) => {
-    const expectedValue: string = '0';
-    const buyPage = new JetbrainsBuyPage(page);
+  [
+    { linkName: 'Get quote', urlRegex: /.*jetbrains\.com\/shop\/customer.*/ },
+    { linkName: 'Learn more', urlRegex: /.*jetbrains\.com\/all.*/ },
+  ].forEach(({ linkName, urlRegex }) => {
+    test(`Click link by name: ${linkName}`, async ({ page }) => {
+      const buyPage = new JetbrainsBuyPage(page)
+      const allProductsCard = buyPage.getCardByName('All Products Pack');
+
+      await allProductsCard.clickLinkByName(linkName);
+
+      await expect(page).toHaveURL(urlRegex)
+    });
+  });
+
+  test('Click on checkbox hides "Get quote" link', async ({ page }) => {
+    const buyPage = new JetbrainsBuyPage(page)
     const ideaCard = buyPage.getCardByName('IntelliJ IDEA Ultimate');
 
-    const cardPrice = await ideaCard.priceTag.textContent();
+    await ideaCard.clickCheckbox();
 
-    await page.pause();
-
-    expect(cardPrice).toBe(expectedValue);
-
+    await expect(ideaCard.getQuoteLink).not.toBeVisible();
   });
 
+  test('Click on checkbox does not hide "Learn more" link', async ({ page }) => {
+    const buyPage = new JetbrainsBuyPage(page)
+    const card = buyPage.getCardByName('All Products Pack');
 
+    await card.clickCheckbox();
 
-
-  // test('Check Plus-subscription card price', async ({ page }) => {
-  //   const expectedValue: string = '€9.50';
-  //
-  //   const buyPage = new JetbrainsBuyPage(page);
-  //   const currencyPicker = buyPage.getCurrencyPicker();
-  //   const freeSubscriptionCard = buyPage.getCardByName('Plus');
-  //
-  //   await currencyPicker.open()
-  //   await currencyPicker.clickOnCurrency('EUR');
-  //
-  //   const cardPrice = await freeSubscriptionCard.priceTag.textContent();
-  //   expect(cardPrice).toBe(expectedValue);
-  //
-  // });
+    await expect(card.learnMoreLink).toBeVisible();
+  });
 
   // test('Toggle subscription interval: monthly', async ({ page }) => {
   //   const expectedValue: string = '€17';
@@ -105,40 +99,6 @@ test.describe('Buy page tests', () => {
   //   expect(cardPrice).toBe(expectedValue);
   //
   // });
-
-  // test('Enterprise card button contents', async ({ page }) => {
-  //   const notionBuyPage = new NotionBuyPage(page)
-  //   const enterpriseSubscriptionCard = notionBuyPage.getCardByName('Enterprise');
-  //   const navButton = enterpriseSubscriptionCard.navButton
-  //
-  //   const navButtonTextContent = await navButton.textContent();
-  //
-  //   expect(navButtonTextContent).toBe('Contact Sales')
-  //
-  // });
-  //
-  //
-  // const cardNames: { cardName: CardName }[] = [
-  //   { cardName: 'Free' },
-  //   { cardName: 'Plus' },
-  //   { cardName: 'Enterprise' },
-  //   { cardName: 'Business' },
-  // ];
-  //
-  // cardNames.forEach(({ cardName }) => {
-  //   test(`Screenshot card nav button: ${cardName}`, async ({ page }) => {
-  //     const notionBuyPage = new NotionBuyPage(page);
-  //     const navButton = notionBuyPage.getCardByName(cardName).navButton;
-  //
-  //     // Делаем скриншот конкретной карточки
-  //     // await navButton.screenshot({ path: `screenshots/navButton-${cardName}-subscriptionCard.png` });
-  //
-  //     // Для проверки соответствия
-  //     await expect(navButton).toHaveScreenshot()
-  //   });
-  // });
-
-
 
 })
 
