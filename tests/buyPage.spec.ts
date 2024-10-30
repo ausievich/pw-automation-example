@@ -29,17 +29,33 @@ test.describe('Buy page tests', () => {
     expect(cardTitle).toBe(expectedValue);
   });
 
-  // Можно попробовать добавить параметризацию
-  // test('Check IDEA card price', async ({ page }) => {
-  //   const expectedValue: string = '0';
-  //
-  //   const buyPage = new JetbrainsBuyPage(page);
-  //   const ideaCard = buyPage.getCardByName('IntelliJ IDEA Ultimate');
-  //
-  //   const cardPrice = await ideaCard.priceTag.textContent();
-  //   expect(cardPrice).toBe(expectedValue);
-  //
-  // });
+
+  test('Click on buy button', async ({ page }) => {
+
+    const buyPage = new JetbrainsBuyPage(page)
+    const ideaCard = buyPage.getCardByName('IntelliJ IDEA Ultimate');
+
+    await ideaCard.buyButton.click()
+
+    await expect(page).toHaveURL(/.*www\.jetbrains\.com\/shop\/customer.*/)
+
+  });
+
+  test.skip('Check IDEA card price', async ({ page }) => {
+    const expectedValue: string = '0';
+    const buyPage = new JetbrainsBuyPage(page);
+    const ideaCard = buyPage.getCardByName('IntelliJ IDEA Ultimate');
+
+    const cardPrice = await ideaCard.priceTag.textContent();
+
+    await page.pause();
+
+    expect(cardPrice).toBe(expectedValue);
+
+  });
+
+
+
 
   // test('Check Plus-subscription card price', async ({ page }) => {
   //   const expectedValue: string = '€9.50';
@@ -89,19 +105,7 @@ test.describe('Buy page tests', () => {
   //   expect(cardPrice).toBe(expectedValue);
   //
   // });
-  //
-  // test('Click subscription card button', async ({ page }) => {
-  //
-  //   const notionBuyPage = new NotionBuyPage(page)
-  //   const plusSubscriptionCard = notionBuyPage.getCardByName('Plus');
-  //   const navButton = plusSubscriptionCard.navButton
-  //
-  //   await navButton.click()
-  //
-  //   await expect(page).toHaveURL(/.*www.notion.so\/signup.*/)
-  //
-  // });
-  //
+
   // test('Enterprise card button contents', async ({ page }) => {
   //   const notionBuyPage = new NotionBuyPage(page)
   //   const enterpriseSubscriptionCard = notionBuyPage.getCardByName('Enterprise');
