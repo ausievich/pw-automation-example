@@ -1,4 +1,5 @@
 import {Locator, Page} from "@playwright/test";
+import { PricesBlock } from "../components/pricesBlock"
 
 export class JetbrainsProductCard {
     private page: Page;
@@ -33,6 +34,10 @@ export class JetbrainsProductCard {
         return this.page.locator(`${this.baseSelector}//a[contains(text(), 'Learn more')]`)
     }
 
+    get pricesBlock() {
+        return new PricesBlock(this.page, this.baseSelector);
+    }
+
     async clickCheckbox() {
         await this.checkbox.click()
     }
@@ -43,37 +48,6 @@ export class JetbrainsProductCard {
 
     async clickLinkByName(name: string){
         await this.page.locator(`${this.baseSelector}//a[contains(text(), '${name}')]`).click()
-    }
-
-    get pricesBlock() {
-        return new PricesBlock(this.page, this.baseSelector);
-    }
-
-}
-
-export class PricesBlock {
-    private page: Page;
-    private baseSelector: string;
-
-    constructor(page: Page, cardSelector: string) {
-        this.page = page;
-        this.baseSelector = `${cardSelector}//div[@data-test="product-price"]/../..`;
-    }
-
-    get secondYearPrice() {
-        return this.page.locator(`${this.baseSelector}//p[@data-test="product-price-second-year"]`)
-    }
-
-    get thirdYearPrice() {
-        return this.page.locator(`${this.baseSelector}//p[@data-test="product-price-third-year-onwards"]`)
-    }
-
-    get productPrice() {
-        return this.page.locator(`${this.baseSelector}//div[@data-test="product-price"]`)
-    }
-
-    async getProductPriceValue() {
-        return await this.page.locator(`${this.baseSelector}//div[@data-test="product-price"]`).textContent();
     }
 
 }

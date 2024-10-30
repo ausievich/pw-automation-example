@@ -1,11 +1,8 @@
 import {Page} from "@playwright/test";
 import {JetbrainsProductCard} from "../components/JetbrainsProductCard";
+import { TabName, Interval, CardName } from "../types/types";
 
-export type CardName = "IntelliJ IDEA Ultimate" | "All Products Pack";
-export type TabName = "For Organizations" | "For Individual Use" | "Special Categories";
-export type Interval = "Monthly billing" | "Yearly billing"
-
-export class JetbrainsBuyPage {
+export class JetBrainsBuyPage {
     protected page: Page;
 
     constructor(page: Page) {
@@ -29,8 +26,6 @@ export class JetbrainsBuyPage {
     getCardByName(name: CardName) {
         return new JetbrainsProductCard(this.page, name);
     }
-
-
 
 
 }

@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
-import {JetbrainsBuyPage, CardName, TabName } from "../pages/JetbrainsBuyPage";
+import { JetBrainsBuyPage } from "../pages/JetBrainsBuyPage";
+import { CardName } from "../types/types";
 
 
 test.beforeEach(async ({ page, context }) => {
@@ -20,7 +21,7 @@ test.describe('Buy page tests', () => {
   test('Click on buy button', async ({ page }) => {
     const urlRegex = /.*www\.jetbrains\.com\/shop\/customer.*/;
 
-    const buyPage = new JetbrainsBuyPage(page)
+    const buyPage = new JetBrainsBuyPage(page)
     const ideaCard = buyPage.getCardByName('IntelliJ IDEA Ultimate');
 
     await ideaCard.buyButton.click()
@@ -31,7 +32,7 @@ test.describe('Buy page tests', () => {
   test(`Monthly individual price displayed correctly`, async ({ page }) => {
     const priceRegex = /.*16\.90.*/;
 
-    const buyPage = new JetbrainsBuyPage(page)
+    const buyPage = new JetBrainsBuyPage(page)
     const card = buyPage.getCardByName('IntelliJ IDEA Ultimate');
 
     await buyPage.clickTabByName('For Individual Use')
@@ -47,7 +48,7 @@ test.describe('Buy page tests', () => {
     { cardName: 'All Products Pack', priceRegex: /.*779\.00.*/ },
   ].forEach(({ cardName, priceRegex }: { cardName: CardName, priceRegex: RegExp }) => {
     test(`Yearly prices for organizations: ${cardName}`, async ({page}) => {
-      const buyPage = new JetbrainsBuyPage(page);
+      const buyPage = new JetBrainsBuyPage(page);
       const card = buyPage.getCardByName(cardName);
       const productPrice = await card.pricesBlock.getProductPriceValue();
 
@@ -57,7 +58,7 @@ test.describe('Buy page tests', () => {
   })
 
   test('Click on checkbox hides "Get quote" link', async ({ page }) => {
-    const buyPage = new JetbrainsBuyPage(page)
+    const buyPage = new JetBrainsBuyPage(page)
     const card = buyPage.getCardByName('IntelliJ IDEA Ultimate');
 
     await card.clickCheckbox();
@@ -66,7 +67,7 @@ test.describe('Buy page tests', () => {
   });
 
   test('Click on checkbox does not hide "Learn more" link', async ({ page }) => {
-    const buyPage = new JetbrainsBuyPage(page)
+    const buyPage = new JetBrainsBuyPage(page)
     const card = buyPage.getCardByName('All Products Pack');
 
     await card.clickCheckbox();
@@ -79,7 +80,7 @@ test.describe('Buy page tests', () => {
     { linkName: 'Learn more', urlRegex: /.*jetbrains\.com\/all.*/ },
   ].forEach(({ linkName, urlRegex }) => {
     test(`Click link by name: ${linkName}`, async ({ page }) => {
-      const buyPage = new JetbrainsBuyPage(page)
+      const buyPage = new JetBrainsBuyPage(page)
       const allProductsCard = buyPage.getCardByName('All Products Pack');
 
       await allProductsCard.clickLinkByName(linkName);
@@ -89,7 +90,7 @@ test.describe('Buy page tests', () => {
   });
 
   test(`Monthly tab hides annual prices`, async ({ page }) => {
-    const buyPage = new JetbrainsBuyPage(page)
+    const buyPage = new JetBrainsBuyPage(page)
     const card = buyPage.getCardByName('IntelliJ IDEA Ultimate');
 
     await buyPage.clickIntervalByName('Monthly billing')
