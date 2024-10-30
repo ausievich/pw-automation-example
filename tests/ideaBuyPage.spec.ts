@@ -51,6 +51,12 @@ test.describe('Navigation tests', () => {
 
     await expect(page).toHaveURL(/.*\/community\/education\/#students.*/)
   });
+
+
+  test('Navigate "JetBrains AI Pro" link', async ({ page }) => {
+    // Проверим переход по ссылке "JetBrains AI Pro"
+  });
+
 })
 
 test.describe('Behaviour tests', () => {
@@ -81,6 +87,16 @@ test.describe('Behaviour tests', () => {
     await expect(card.pricesBlock.secondYearPrice).not.toBeVisible();
     await expect(card.pricesBlock.thirdYearPrice).not.toBeVisible();
 
+  });
+
+  test('Show "Includes 18 tools" dropdown', async ({ page }) => {
+    // В тесте проверить работу компонента "Includes 18 tools" в карточке "All Products Pack"
+    // По клику компонент раскрывается. Можно сделать его скриншот.
+    // Или просто проверить, что он отобразился.
+  });
+
+  test('Hide "Includes 18 tools" dropdown', async ({ page }) => {
+    // Тест похож на предыдущий, но здесь проверим, что этот элемент можно обратно скрыть
   });
 
 })
@@ -119,9 +135,28 @@ test.describe('Prices assertions', () => {
     });
   })
 
-
+  test('"JetBrains AI Pro" prices add correctly', async ({ page }) => {
+    // Проверим, что ценники корректно рассчитываются,
+    // если кликнуть чекбокс "JetBrains AI Pro"
+    // Отдельно для месячной и годовой подписок
+  });
 
 })
+
+test.describe('Screenshot tests', () => {
+
+  test('Screenshot ProductCard', async ({ page }) => {
+    // Сделать скриншоты ProductCard.
+    // Для карточки продукта и для "All Products Pack"
+  });
+
+  test('Screenshot DiscountCard', async ({ page }) => {
+    // Сделать скриншот одного из элементов DiscountCard.
+  });
+
+})
+
+
 
 
 
