@@ -1,9 +1,8 @@
 import {Page} from "@playwright/test";
 import {JetbrainsProductCard} from "../components/JetbrainsProductCard";
-import {CurrencyPicker} from "../components/currencyPicker";
 
 export type CardName = "IntelliJ IDEA Ultimate" | "All Products Pack";
-export type TabName = "For Organizations" | "For Individual Use" | "Special Categories";
+export type TabName = "For Organizations" | "For Individual Use" | "Special Categories" | "Monthly" | "Yearly";
 
 export class JetbrainsBuyPage {
     protected page: Page;
@@ -16,8 +15,9 @@ export class JetbrainsBuyPage {
         return this.page.locator(`//h1`);
     }
 
-    getTabByName(name: TabName) {
-        return this.page.locator(`//span[@data-test="adaptive-switcher__switcher"]//div[contains(text(), '${name}')]`)
+    async clickTabByName(name: TabName) {
+        await this.page.locator(`(//span[@data-test="adaptive-switcher__switcher"]//div[contains(text(), '${name}')])[1]`).click()
+
     }
 
     getCardByName(name: CardName) {
