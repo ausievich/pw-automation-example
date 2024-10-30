@@ -42,7 +42,7 @@ test.describe('Navigation tests', () => {
     });
   });
 
-  test.only(`Click on a special card link`, async ({ page }) => {
+  test(`Click on a special card link`, async ({ page }) => {
     const buyPage = new BuyPage(page)
     const card = buyPage.getDiscountCardByName('For startups')
 
