@@ -99,7 +99,6 @@ test.describe('Buy page tests', () => {
 
   });
 
-
 })
 
 
