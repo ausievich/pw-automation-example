@@ -1,6 +1,7 @@
 export type CardName =
     | "IntelliJ IDEA Ultimate"
-    | "All Products Pack";
+    | "All Products Pack"
+    | "CLion";
 
 export type TabName =
     | "For Organizations"

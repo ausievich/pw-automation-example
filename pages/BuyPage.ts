@@ -1,8 +1,9 @@
 import {Page} from "@playwright/test";
-import {JetbrainsProductCard} from "../components/JetbrainsProductCard";
+import {ProductCard} from "../components/ProductCard";
+import {DiscountCard} from "../components/DiscountCard";
 import { TabName, Interval, CardName } from "../types/types";
 
-export class JetBrainsBuyPage {
+export class BuyPage {
     protected page: Page;
 
     constructor(page: Page) {
@@ -24,9 +25,12 @@ export class JetBrainsBuyPage {
     }
 
     getCardByName(name: CardName) {
-        return new JetbrainsProductCard(this.page, name);
+        return new ProductCard(this.page, name);
     }
 
+    getDiscountCardByName(name: string) {
+        return new DiscountCard(this.page, name);
+    }
 
 }
 

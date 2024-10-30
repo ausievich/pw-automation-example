@@ -1,7 +1,7 @@
 import {Locator, Page} from "@playwright/test";
 import { PricesBlock } from "../components/PricesBlock"
 
-export class JetbrainsProductCard {
+export class ProductCard {
     private page: Page;
     private baseSelector: string;
 
