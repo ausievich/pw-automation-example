@@ -4,7 +4,7 @@ This project contains tests for the **Buy** pages of JetBrains products using Pl
 
 ## Project Structure
 
-- **`/tests`**: Contains tests for the **Buy IntelliJ IDEA** and **Buy CLion** pages.
+- **`/tests`**: Contains tests for the [**Buy IntelliJ IDEA**](https://www.jetbrains.com/idea/buy/) and [**Buy CLion**](https://www.jetbrains.com/clion/buy) pages.
 - **`/pages/BuyPage.ts`**: Contains the **Buy Page** class that defines the structure and methods for the pages under test.
 - **`/components`**: Houses classes for individual elements used on the Buy pages, improving readability and maintainability.
 
