@@ -11,7 +11,7 @@ This project contains tests for the **Buy** pages of JetBrains products using Pl
 ## Key Features
 
 - **Page Object Pattern**: Tests are organized using the **Page Object** pattern, which simplifies scaling and extending tests.
-- **Component Classes**: Elements like buttons and inputs are encapsulated in component classes, promoting reusable and clean code.
+- **Component Classes**: Common page elements are encapsulated in component classes, promoting reusable and clean code.
 
 ## Running the Tests
 
@@ -27,4 +27,5 @@ npx playwright test tests/fileName.ts
 ```
 
 ## Notes
+- **Screenshot testing, Docker setup, and CI integration** were not considered within the scope of this task.
 - **Header and Footer** testing is not covered in this project and may be implemented separately if needed.
