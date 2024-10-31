@@ -2,6 +2,8 @@ import { test, expect } from '@playwright/test';
 import { BuyPage } from "../pages/BuyPage";
 import { CardName } from "../types/types";
 
+const buyPageUrl = 'https://www.jetbrains.com/clion/buy/';
+const productCardName: CardName = 'CLion';
 
 test.beforeEach(async ({ page, context }) => {
   await context.addCookies([
@@ -13,7 +15,7 @@ test.beforeEach(async ({ page, context }) => {
     }
   ]);
 
-  await page.goto('https://www.jetbrains.com/clion/buy/');
+  await page.goto(buyPageUrl);
 });
 
 test.describe('Navigation tests', () => {
@@ -21,9 +23,9 @@ test.describe('Navigation tests', () => {
     const urlRegex = /.*www\.jetbrains\.com\/shop\/customer.*/;
 
     const buyPage = new BuyPage(page)
-    const ideaCard = buyPage.getCardByName('CLion');
+    const productCard = buyPage.getCardByName(productCardName);
 
-    await ideaCard.buyButton.click()
+    await productCard.buyButton.click()
 
     await expect(page).toHaveURL(urlRegex)
   });
@@ -52,12 +54,17 @@ test.describe('Navigation tests', () => {
     await expect(page).toHaveURL(/.*\/store\/startups.*/)
   });
 
+
+  test('Navigate "JetBrains AI Pro" link', async ({ page }) => {
+    // Проверим переход по ссылке "JetBrains AI Pro"
+  });
+
 })
 
 test.describe('Behaviour tests', () => {
   test('Click on checkbox hides "Get quote" link', async ({ page }) => {
     const buyPage = new BuyPage(page)
-    const card = buyPage.getCardByName('CLion');
+    const card = buyPage.getCardByName(productCardName);
 
     await card.clickCheckbox();
 
@@ -75,13 +82,23 @@ test.describe('Behaviour tests', () => {
 
   test(`Monthly tab hides annual prices`, async ({ page }) => {
     const buyPage = new BuyPage(page)
-    const card = buyPage.getCardByName('CLion');
+    const card = buyPage.getCardByName(productCardName);
 
     await buyPage.clickIntervalByName('Monthly billing')
 
     await expect(card.pricesBlock.secondYearPrice).not.toBeVisible();
     await expect(card.pricesBlock.thirdYearPrice).not.toBeVisible();
 
+  });
+
+  test('Show "Includes 18 tools" dropdown', async ({ page }) => {
+    // В тесте проверить работу компонента "Includes 18 tools" в карточке "All Products Pack"
+    // По клику компонент раскрывается.
+    // Проверить, что он отобразился.
+  });
+
+  test('Hide "Includes 18 tools" dropdown', async ({ page }) => {
+    // Тест похож на предыдущий, но здесь проверим, что этот элемент можно обратно скрыть
   });
 
 })
@@ -122,6 +139,18 @@ test.describe('Prices assertions', () => {
 
 })
 
+test.describe('Screenshot tests', () => {
+
+  test('Screenshot ProductCard', async ({ page }) => {
+    // Сделать скриншоты ProductCard.
+    // Для карточки продукта и для "All Products Pack"
+  });
+
+  test('Screenshot DiscountCard', async ({ page }) => {
+    // Сделать скриншот одного из элементов DiscountCard.
+  });
+
+})
 
 
 

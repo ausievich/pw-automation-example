@@ -2,6 +2,8 @@ import { test, expect } from '@playwright/test';
 import { BuyPage } from "../pages/BuyPage";
 import { CardName } from "../types/types";
 
+const buyPageUrl = 'https://www.jetbrains.com/idea/buy/';
+const productCardName: CardName = 'IntelliJ IDEA Ultimate';
 
 test.beforeEach(async ({ page, context }) => {
   await context.addCookies([
@@ -13,7 +15,7 @@ test.beforeEach(async ({ page, context }) => {
     }
   ]);
 
-  await page.goto('https://www.jetbrains.com/idea/buy/');
+  await page.goto(buyPageUrl);
 });
 
 test.describe('Navigation tests', () => {
@@ -21,9 +23,9 @@ test.describe('Navigation tests', () => {
     const urlRegex = /.*www\.jetbrains\.com\/shop\/customer.*/;
 
     const buyPage = new BuyPage(page)
-    const ideaCard = buyPage.getCardByName('IntelliJ IDEA Ultimate');
+    const productCard = buyPage.getCardByName(productCardName);
 
-    await ideaCard.buyButton.click()
+    await productCard.buyButton.click()
 
     await expect(page).toHaveURL(urlRegex)
   });
@@ -62,7 +64,7 @@ test.describe('Navigation tests', () => {
 test.describe('Behaviour tests', () => {
   test('Click on checkbox hides "Get quote" link', async ({ page }) => {
     const buyPage = new BuyPage(page)
-    const card = buyPage.getCardByName('IntelliJ IDEA Ultimate');
+    const card = buyPage.getCardByName(productCardName);
 
     await card.clickCheckbox();
 
@@ -80,7 +82,7 @@ test.describe('Behaviour tests', () => {
 
   test(`Monthly tab hides annual prices`, async ({ page }) => {
     const buyPage = new BuyPage(page)
-    const card = buyPage.getCardByName('IntelliJ IDEA Ultimate');
+    const card = buyPage.getCardByName(productCardName);
 
     await buyPage.clickIntervalByName('Monthly billing')
 
@@ -91,8 +93,8 @@ test.describe('Behaviour tests', () => {
 
   test('Show "Includes 18 tools" dropdown', async ({ page }) => {
     // В тесте проверить работу компонента "Includes 18 tools" в карточке "All Products Pack"
-    // По клику компонент раскрывается. Можно сделать его скриншот.
-    // Или просто проверить, что он отобразился.
+    // По клику компонент раскрывается.
+    // Проверить, что он отобразился.
   });
 
   test('Hide "Includes 18 tools" dropdown', async ({ page }) => {
@@ -121,7 +123,7 @@ test.describe('Prices assertions', () => {
   [
     { cardName: 'IntelliJ IDEA Ultimate', monthPriceRegex: /.*\$16\.90.*/ },
     { cardName: 'All Products Pack', monthPriceRegex: /.*\$28\.90.*/ }
-  ].forEach(({ cardName, monthPriceRegex }: { cardName: CardName, yearPriceRegex: RegExp, monthPriceRegex: RegExp }) => {
+  ].forEach(({ cardName, monthPriceRegex }: { cardName: CardName, monthPriceRegex: RegExp }) => {
     test(`Monthly price for individuals: ${cardName}`, async ({ page }) => {
       const buyPage = new BuyPage(page)
       const card = buyPage.getCardByName(cardName);
@@ -136,8 +138,7 @@ test.describe('Prices assertions', () => {
   })
 
   test('"JetBrains AI Pro" prices add correctly', async ({ page }) => {
-    // Проверим, что ценники корректно рассчитываются,
-    // если кликнуть чекбокс "JetBrains AI Pro"
+    // Проверим, что ценники корректно рассчитываются, если кликнуть чекбокс "JetBrains AI Pro"
     // Отдельно для месячной и годовой подписок
   });
 
