@@ -1,7 +1,8 @@
-export type CardName =
+export type ProductName =
     | "IntelliJ IDEA Ultimate"
     | "All Products Pack"
-    | "CLion";
+    | "CLion"
+    | "PyCharm Professional";
 
 export type TabName =
     | "For Organizations"
@@ -16,4 +17,9 @@ export type Interval =
 export interface SubscriptionType {
     interval: Interval,
     tabName: TabName
+}
+
+export interface PageConfigurations {
+    buyPageUrl: string,
+    productName: ProductName
 }
