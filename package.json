@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run tests": "npx playwright test tests/buyPage.spec.ts --headed"
+    "test:idea": "PAGE_URL=https://www.jetbrains.com/idea/buy/ PRODUCT_NAME='IntelliJ IDEA Ultimate' npx playwright test",
+    "test:clion": "PAGE_URL=https://www.jetbrains.com/clion/buy/ PRODUCT_NAME='CLion' npx playwright test",
+    "test:pycharm": "PAGE_URL=https://www.jetbrains.com/pycharm/buy/ PRODUCT_NAME='PyCharm Professional' npx playwright test"
   },
   "keywords": [],
   "author": "",
