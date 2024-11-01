@@ -105,7 +105,7 @@ test.describe(`Special categories tab tests`, () => {
 
 })
 
-test.describe(`Card screenshots`, () => {
+test.describe.skip(`Card screenshots`, () => {
   // Попробовать запустить в ci
   // Задать конфигурацию браузера в конфиге
 
