@@ -1,12 +1,13 @@
 import {test, expect, Page} from '@playwright/test';
 import { BuyPage } from "../pages/BuyPage";
-import { CardName } from "../utils/types";
+import { CardName, SubscriptionType } from "../utils/types";
 import {ProductCard} from "../components/ProductCard";
 
 // Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
 
 const buyPageUrl = 'https://www.jetbrains.com/clion/buy/';
 const productCardName: CardName = 'CLion';
+const allProductsCardName: CardName = 'All Products Pack';
 
 let buyPage: BuyPage;
 let productCard: ProductCard;
@@ -26,7 +27,7 @@ test.beforeEach(async ({ page, context }) => {
 
   buyPage = new BuyPage(page);
   productCard = buyPage.getCardByName(productCardName);
-  allProductsCard = buyPage.getCardByName('All Products Pack')
+  allProductsCard = buyPage.getCardByName(allProductsCardName);
 
 });
 
@@ -103,16 +104,38 @@ test.describe('Special categories tab tests', () => {
 
 })
 
-test.describe('Cards screenshot tests', () => {
-  // Наверное, проще скриншотить карточки.
-  // Потому что поддерживать цены в коде тестов будет сложно.
+test.describe('Cards screenshots', () => {
+  // Попробовать запустить в ci
+  // Задать конфигурацию браузера в конфиге
 
+  const subscriptionTypes: SubscriptionType[] = [
+    { interval: 'Monthly billing', tabName: 'For Individual Use' },
+    { interval: 'Monthly billing', tabName: 'For Organizations' },
+    { interval: 'Yearly billing', tabName: 'For Individual Use' },
+    { interval: 'Yearly billing', tabName: 'For Organizations' },
+  ];
+
+  subscriptionTypes.forEach(({ interval, tabName }) => {
+    test.only(`${productCardName} - ${tabName} (${interval})`, async () => {
+      await buyPage.clickTabByName(tabName);
+      await buyPage.clickIntervalByName(interval);
+
+      await expect(productCard.self).toHaveScreenshot();
+    });
+
+    test.only(`${allProductsCardName} - ${tabName} (${interval})`, async () => {
+      await buyPage.clickTabByName(tabName);
+      await buyPage.clickIntervalByName(interval);
+
+      await expect(allProductsCard.self).toHaveScreenshot();
+    });
+  });
 })
 
 test.describe('Further information block tests', () => {
   // Сделать скриншот блока
   // Проверить работу ссылок
-  // Проверить работу кнопки Contact us
+  // Проверить работу кнопки "Contact us"
 })
 
 

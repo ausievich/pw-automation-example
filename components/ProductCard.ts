@@ -11,6 +11,10 @@ export class ProductCard {
         this.baseSelector = `//div[@class="wt-css-content-switcher__block"]//h3[contains(text(), "${cardName}")]/ancestor::div[contains(@data-test, 'product-card')]`;
     }
 
+    get self() {
+        return this.page.locator(`${this.baseSelector}`);
+    }
+
     get title() {
         return this.page.locator(`${this.baseSelector}//h3`);
     }

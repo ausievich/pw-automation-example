@@ -11,3 +11,9 @@ export type TabName =
 export type Interval =
     | "Monthly billing"
     | "Yearly billing";
+
+
+export interface SubscriptionType {
+    interval: Interval,
+    tabName: TabName
+}

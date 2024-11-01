@@ -1,7 +1,7 @@
 import {Page} from "@playwright/test";
 import {ProductCard} from "../components/ProductCard";
 import {DiscountCard} from "../components/DiscountCard";
-import { TabName, Interval, CardName } from "../types/types";
+import { TabName, Interval, CardName } from "../utils/types";
 
 export class BuyPage {
     protected page: Page;
