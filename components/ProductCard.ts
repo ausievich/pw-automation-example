@@ -1,5 +1,5 @@
 import {Locator, Page} from "@playwright/test";
-import { PricesBlock } from "../components/PricesBlock"
+import { PricesBlock } from "./PricesBlock"
 
 export class ProductCard {
     private page: Page;

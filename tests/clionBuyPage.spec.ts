@@ -1,11 +1,20 @@
-import { test, expect } from '@playwright/test';
+import {test, expect, Page} from '@playwright/test';
 import { BuyPage } from "../pages/BuyPage";
 import { CardName } from "../types/types";
+import {ProductCard} from "../components/ProductCard";
 
 const buyPageUrl = 'https://www.jetbrains.com/clion/buy/';
 const productCardName: CardName = 'CLion';
 
+let buyPage: BuyPage;
+let productCard: ProductCard;
+let allProductsCard: ProductCard;
+
 test.beforeEach(async ({ page, context }) => {
+  buyPage = new BuyPage(page);
+  productCard = buyPage.getCardByName(productCardName);
+  allProductsCard = buyPage.getCardByName('All Products Pack')
+
   await context.addCookies([
     {
       name: 'jb_cookies_consent_closed',
@@ -22,9 +31,6 @@ test.describe('Navigation tests', () => {
   test('Click on buy button', async ({ page }) => {
     const urlRegex = /.*www\.jetbrains\.com\/shop\/customer.*/;
 
-    const buyPage = new BuyPage(page)
-    const productCard = buyPage.getCardByName(productCardName);
-
     await productCard.buyButton.click()
 
     await expect(page).toHaveURL(urlRegex)
@@ -35,9 +41,6 @@ test.describe('Navigation tests', () => {
     { linkName: 'Learn more', urlRegex: /.*jetbrains\.com\/all.*/ },
   ].forEach(({ linkName, urlRegex }) => {
     test(`Click link by name: ${linkName}`, async ({ page }) => {
-      const buyPage = new BuyPage(page)
-      const allProductsCard = buyPage.getCardByName('All Products Pack');
-
       await allProductsCard.clickLinkByName(linkName);
 
       await expect(page).toHaveURL(urlRegex)
@@ -45,11 +48,10 @@ test.describe('Navigation tests', () => {
   });
 
   test(`Click on a special card link`, async ({ page }) => {
-    const buyPage = new BuyPage(page)
     const card = buyPage.getDiscountCardByName('For startups')
 
     await buyPage.clickTabByName('Special Categories')
-    card.clickLinkByName('Learn more')
+    await card.clickLinkByName('Learn more')
 
     await expect(page).toHaveURL(/.*\/store\/startups.*/)
   });
@@ -62,33 +64,24 @@ test.describe('Navigation tests', () => {
 })
 
 test.describe('Behaviour tests', () => {
+
   test('Click on checkbox hides "Get quote" link', async ({ page }) => {
-    const buyPage = new BuyPage(page)
-    const card = buyPage.getCardByName(productCardName);
+    await productCard.clickCheckbox();
 
-    await card.clickCheckbox();
-
-    await expect(card.getQuoteLink).not.toBeVisible();
+    await expect(productCard.getQuoteLink).not.toBeVisible();
   });
 
   test('Click on checkbox does not hide "Learn more" link', async ({ page }) => {
-    const buyPage = new BuyPage(page)
-    const card = buyPage.getCardByName('All Products Pack');
+    await allProductsCard.clickCheckbox();
 
-    await card.clickCheckbox();
-
-    await expect(card.learnMoreLink).toBeVisible();
+    await expect(allProductsCard.learnMoreLink).toBeVisible();
   });
 
   test(`Monthly tab hides annual prices`, async ({ page }) => {
-    const buyPage = new BuyPage(page)
-    const card = buyPage.getCardByName(productCardName);
-
     await buyPage.clickIntervalByName('Monthly billing')
 
-    await expect(card.pricesBlock.secondYearPrice).not.toBeVisible();
-    await expect(card.pricesBlock.thirdYearPrice).not.toBeVisible();
-
+    await expect(productCard.pricesBlock.secondYearPrice).not.toBeVisible();
+    await expect(productCard.pricesBlock.thirdYearPrice).not.toBeVisible();
   });
 
   test('Show "Includes 18 tools" dropdown', async ({ page }) => {
@@ -114,12 +107,10 @@ test.describe('Prices assertions', () => {
   ].forEach(({ cardName, yearPriceRegex }: { cardName: CardName, yearPriceRegex: RegExp }) => {
 
     test(`Yearly price for organizations: ${cardName}`, async ({page}) => {
-      const buyPage = new BuyPage(page);
       const card = buyPage.getCardByName(cardName);
       const productPrice = await card.pricesBlock.getProductPriceValue();
 
       expect(productPrice).toMatch(yearPriceRegex)
-
     });
   });
 
@@ -128,7 +119,6 @@ test.describe('Prices assertions', () => {
     { cardName: 'All Products Pack', monthPriceRegex: /.*\$28\.90.*/ }
   ].forEach(({ cardName, monthPriceRegex }: { cardName: CardName, yearPriceRegex: RegExp, monthPriceRegex: RegExp }) => {
     test(`Monthly price for individuals: ${cardName}`, async ({ page }) => {
-      const buyPage = new BuyPage(page)
       const card = buyPage.getCardByName(cardName);
 
       await buyPage.clickTabByName('For Individual Use')
