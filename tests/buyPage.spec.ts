@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { BuyPage } from "../pages/BuyPage";
-import { ProductName, SubscriptionType, PageConfigurations } from "../utils/types";
+import { ProductName, SubscriptionType } from "../utils/types";
 import { ProductCard } from "../components/ProductCard";
 
 // Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
