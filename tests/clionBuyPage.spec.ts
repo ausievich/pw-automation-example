@@ -1,7 +1,9 @@
 import {test, expect, Page} from '@playwright/test';
 import { BuyPage } from "../pages/BuyPage";
-import { CardName } from "../types/types";
+import { CardName } from "../utils/types";
 import {ProductCard} from "../components/ProductCard";
+
+// Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
 
 const buyPageUrl = 'https://www.jetbrains.com/clion/buy/';
 const productCardName: CardName = 'CLion';
@@ -11,10 +13,6 @@ let productCard: ProductCard;
 let allProductsCard: ProductCard;
 
 test.beforeEach(async ({ page, context }) => {
-  buyPage = new BuyPage(page);
-  productCard = buyPage.getCardByName(productCardName);
-  allProductsCard = buyPage.getCardByName('All Products Pack')
-
   await context.addCookies([
     {
       name: 'jb_cookies_consent_closed',
@@ -25,9 +23,14 @@ test.beforeEach(async ({ page, context }) => {
   ]);
 
   await page.goto(buyPageUrl);
+
+  buyPage = new BuyPage(page);
+  productCard = buyPage.getCardByName(productCardName);
+  allProductsCard = buyPage.getCardByName('All Products Pack')
+
 });
 
-test.describe('Navigation tests', () => {
+test.describe('Card navigation tests', () => {
   test('Click on buy button', async ({ page }) => {
     const urlRegex = /.*www\.jetbrains\.com\/shop\/customer.*/;
 
@@ -46,16 +49,6 @@ test.describe('Navigation tests', () => {
       await expect(page).toHaveURL(urlRegex)
     });
   });
-
-  test(`Click on a special card link`, async ({ page }) => {
-    const card = buyPage.getDiscountCardByName('For startups')
-
-    await buyPage.clickTabByName('Special Categories')
-    await card.clickLinkByName('Learn more')
-
-    await expect(page).toHaveURL(/.*\/store\/startups.*/)
-  });
-
 
   test('Navigate "JetBrains AI Pro" link', async ({ page }) => {
     // Проверим переход по ссылке "JetBrains AI Pro"
@@ -96,55 +89,31 @@ test.describe('Behaviour tests', () => {
 
 })
 
-test.describe('Prices assertions', () => {
-  // Здесь, вероятно, можно хранить цены в каком-то отдельном файле,
-  // и обращаться к ним через переменные. Чтобы легче было поддерживать код.
-  // На данном этапе решил сильно не заморачиваться
+test.describe('Special categories tab tests', () => {
+  // Здесь можно все ссылки проверить
 
-  [
-    { cardName: 'CLion', yearPriceRegex: /.*\$229\.00.*/ },
-    { cardName: 'All Products Pack', yearPriceRegex: /.*\$779\.00.*/ },
-  ].forEach(({ cardName, yearPriceRegex }: { cardName: CardName, yearPriceRegex: RegExp }) => {
+  test(`Click on a special card link`, async ({ page }) => {
+    const card = buyPage.getDiscountCardByName('For startups')
 
-    test(`Yearly price for organizations: ${cardName}`, async ({page}) => {
-      const card = buyPage.getCardByName(cardName);
-      const productPrice = await card.pricesBlock.getProductPriceValue();
+    await buyPage.clickTabByName('Special Categories')
+    await card.clickLinkByName('Learn more')
 
-      expect(productPrice).toMatch(yearPriceRegex)
-    });
-  });
-
-  [
-    { cardName: 'CLion', monthPriceRegex: /.*\$9\.90.*/ },
-    { cardName: 'All Products Pack', monthPriceRegex: /.*\$28\.90.*/ }
-  ].forEach(({ cardName, monthPriceRegex }: { cardName: CardName, yearPriceRegex: RegExp, monthPriceRegex: RegExp }) => {
-    test(`Monthly price for individuals: ${cardName}`, async ({ page }) => {
-      const card = buyPage.getCardByName(cardName);
-
-      await buyPage.clickTabByName('For Individual Use')
-      await buyPage.clickIntervalByName('Monthly billing')
-
-      const productPrice = await card.pricesBlock.getProductPriceValue();
-
-      expect(productPrice).toMatch(monthPriceRegex)
-    });
-  })
-
-})
-
-test.describe('Screenshot tests', () => {
-
-  test('Screenshot ProductCard', async ({ page }) => {
-    // Сделать скриншоты ProductCard.
-    // Для карточки продукта и для "All Products Pack"
-  });
-
-  test('Screenshot DiscountCard', async ({ page }) => {
-    // Сделать скриншот одного из элементов DiscountCard.
+    await expect(page).toHaveURL(/.*\/store\/startups.*/)
   });
 
 })
 
+test.describe('Cards screenshot tests', () => {
+  // Наверное, проще скриншотить карточки.
+  // Потому что поддерживать цены в коде тестов будет сложно.
+
+})
+
+test.describe('Further information block tests', () => {
+  // Сделать скриншот блока
+  // Проверить работу ссылок
+  // Проверить работу кнопки Contact us
+})
 
 
 

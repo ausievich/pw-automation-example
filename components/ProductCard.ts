@@ -1,16 +1,17 @@
-import {Locator, Page} from "@playwright/test";
+import { Page } from "@playwright/test";
 import { PricesBlock } from "./PricesBlock"
+import { CardName } from "../utils/types";
 
 export class ProductCard {
     private page: Page;
     private baseSelector: string;
 
-    constructor(page: Page, subscriptionName: string) {
+    constructor(page: Page, cardName: CardName) {
         this.page = page;
-        this.baseSelector = `//div[@class="wt-css-content-switcher__block"]//h3[contains(text(), "${subscriptionName}")]/ancestor::div[contains(@data-test, 'product-card')]`;
+        this.baseSelector = `//div[@class="wt-css-content-switcher__block"]//h3[contains(text(), "${cardName}")]/ancestor::div[contains(@data-test, 'product-card')]`;
     }
 
-    get title(): Locator {
+    get title() {
         return this.page.locator(`${this.baseSelector}//h3`);
     }
 
