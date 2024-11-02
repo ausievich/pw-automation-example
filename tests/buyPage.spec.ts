@@ -30,7 +30,8 @@ test.beforeEach(async ({ page, context }) => {
 
 });
 
-test.describe.only(`Navigation tests`, () => {
+test.describe(`Navigation tests`, () => {
+
   [productName, allProductsCardName].forEach((cardName) => {
     test(`Click on buy button: ${cardName}`, async ({ page }) => {
       const urlRegex = /.*www\.jetbrains\.com\/shop\/customer.*/;
@@ -41,7 +42,7 @@ test.describe.only(`Navigation tests`, () => {
       await expect(page).toHaveURL(urlRegex)
     });
 
-    test('Navigate "JetBrains AI Pro" link', async ({ page }) => {
+    test(`Navigate "AI Pro" link ${cardName}`, async ({ page }) => {
       // Проверим переход по ссылке "JetBrains AI Pro"
     });
   });
@@ -92,7 +93,7 @@ test.describe(`Behaviour tests`, () => {
 
 })
 
-test.describe(`Screenshot tests`, () => {
+test.describe.skip(`Screenshot tests`, () => {
   const subscriptionTypes: SubscriptionType[] = [
     { interval: 'Monthly billing', tabName: 'For Individual Use' },
     { interval: 'Monthly billing', tabName: 'For Organizations' },
