@@ -26,6 +26,9 @@ jobs:
   test_idea:
     needs: install
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.48.1-noble
+      options: --user 1001
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -37,8 +40,6 @@ jobs:
           name: node_modules
       - name: Extract node_modules
         run: tar -xzf node_modules.tar.gz
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
       - name: Run test for IntelliJ IDEA Ultimate
         run: npm run test:idea
       - uses: actions/upload-artifact@v4
@@ -51,6 +52,9 @@ jobs:
   test_clion:
     needs: install
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.48.1-noble
+      options: --user 1001
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -62,8 +66,6 @@ jobs:
           name: node_modules
       - name: Extract node_modules
         run: tar -xzf node_modules.tar.gz
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
       - name: Run test for CLion
         run: npm run test:clion
       - uses: actions/upload-artifact@v4
@@ -76,6 +78,9 @@ jobs:
   test_pycharm:
     needs: install
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.48.1-noble
+      options: --user 1001
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -87,8 +92,6 @@ jobs:
           name: node_modules
       - name: Extract node_modules
         run: tar -xzf node_modules.tar.gz
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
       - name: Run test for PyCharm Professional
         run: npm run test:pycharm
       - uses: actions/upload-artifact@v4

@@ -6,7 +6,10 @@
   "scripts": {
     "test:idea": "PRODUCT_NAME='IDEA' npx playwright test",
     "test:clion": "PRODUCT_NAME='CLION' npx playwright test",
-    "test:pycharm": "PRODUCT_NAME='PYCHARM' npx playwright test"
+    "test:pycharm": "PRODUCT_NAME='PYCHARM' npx playwright test",
+    "test:idea:docker": "docker run -it --rm --ipc=host -e PRODUCT_NAME='IDEA' -v $(pwd):/app -w /app mcr.microsoft.com/playwright:v1.48.1-noble /bin/bash -c 'npm install && npx playwright test'",
+    "test:clion:docker": "docker run -it --rm --ipc=host -e PRODUCT_NAME='CLION' -v $(pwd):/app -w /app mcr.microsoft.com/playwright:v1.48.1-noble /bin/bash -c 'npm install && npx playwright test'",
+    "test:pycharm:docker": "docker run -it --rm --ipc=host -e PRODUCT_NAME='PYCHARM' -v $(pwd):/app -w /app mcr.microsoft.com/playwright:v1.48.1-noble /bin/bash -c 'npm install && npx playwright test'"
   },
   "keywords": [],
   "author": "",

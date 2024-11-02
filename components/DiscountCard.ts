@@ -5,7 +5,6 @@ export class DiscountCard {
     readonly learnMoreLink: Locator;
 
     constructor(page: Page, name: string) {
-        // Подумать, можно ли адаптировать для разных языков
         const baseLocator = `//div[@class='wt-css-content-switcher__block']//h3[contains(text(), '${name}')]/..`;
 
         this.page = page;

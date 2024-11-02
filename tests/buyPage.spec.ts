@@ -3,8 +3,6 @@ import { BuyPage } from "../pages/BuyPage";
 import { ProductName, SubscriptionType, PRODUCT_NAMES, LINKS, LinkName } from "../utils/types";
 import { ProductCard } from "../components/ProductCard";
 
-// Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
-
 const productName = PRODUCT_NAMES[process.env.PRODUCT_NAME];
 const pageUrl = LINKS[process.env.PRODUCT_NAME];
 
@@ -21,6 +19,18 @@ test.beforeEach(async ({ page, context }) => {
       value: 'true',
       domain: '.jetbrains.com',
       path: '/',
+    },
+    {
+      name: 'cf_country-region',
+      value: 'AM-ER',
+      domain: '.jetbrains.com',
+      path: '/'
+    },
+    {
+      name: 'cookie_country',
+      value: 'AM',
+      domain: '.jetbrains.com',
+      path: '/'
     }
   ]);
 
@@ -32,13 +42,21 @@ test.beforeEach(async ({ page, context }) => {
 
 });
 
-test.describe(`Card navigation tests`, () => {
-  test('Click on buy button', async ({ page }) => {
-    const urlRegex = /.*www\.jetbrains\.com\/shop\/customer.*/;
+test.describe(`Navigation tests`, () => {
 
-    await productCard.buyButton.click()
+  [productName, allProductsCardName].forEach((cardName) => {
+    test(`Click on buy button: ${cardName}`, async ({ page }) => {
+      const urlRegex = /.*www\.jetbrains\.com\/shop\/customer.*/;
+      const card = await buyPage.getCardByName(cardName);
 
-    await expect(page).toHaveURL(urlRegex)
+      await card.buyButton.click()
+
+      await expect(page).toHaveURL(urlRegex)
+    });
+
+    test(`Navigate "AI Pro" link ${cardName}`, async ({ page }) => {
+      // Проверим переход по ссылке "JetBrains AI Pro"
+    });
   });
 
   [
@@ -50,10 +68,6 @@ test.describe(`Card navigation tests`, () => {
 
       await expect(page).toHaveURL(urlRegex)
     });
-  });
-
-  test('Navigate "JetBrains AI Pro" link', async ({ page }) => {
-    // Проверим переход по ссылке "JetBrains AI Pro"
   });
 
 })
@@ -69,6 +83,7 @@ test.describe(`Behaviour tests`, () => {
   test('Click on checkbox does not hide "Learn more" link', async ({ page }) => {
     await allProductsCard.clickCheckbox();
 
+    await expect(allProductsCard.getQuoteLink).not.toBeVisible();
     await expect(allProductsCard.learnMoreLink).toBeVisible();
   });
 
@@ -82,30 +97,17 @@ test.describe(`Behaviour tests`, () => {
   test('Show "Includes 18 tools" dropdown', async ({ page }) => {
     // В тесте проверить работу компонента "Includes 18 tools" в карточке "All Products Pack"
     // По клику компонент раскрывается.
-    // Проверить, что он отобразился.
   });
 
   test('Hide "Includes 18 tools" dropdown', async ({ page }) => {
-    // Тест похож на предыдущий, но здесь проверим, что этот элемент можно обратно скрыть
+    // Элемент сворачивается
   });
 
 })
 
-test.describe(`Special categories tab tests`, () => {
-  // Здесь можно все ссылки проверить
+test.describe(`Screenshot tests`, () => {
+  // Спросить отчего зависит наличие US перед ценой на карточке
 
-  test.skip(`Click on a special card link`, async ({ page }) => {
-    const card = await buyPage.getDiscountCardByName('For startups')
-
-    await buyPage.clickTabByName('Special Categories')
-    await card.clickLearnMoreLink()
-
-    await expect(page).toHaveURL(/.*\/store\/startups.*/)
-  });
-
-})
-
-test.describe.skip(`Card screenshots`, () => {
   const subscriptionTypes: SubscriptionType[] = [
     { interval: 'Monthly billing', tabName: 'For Individual Use' },
     { interval: 'Monthly billing', tabName: 'For Organizations' },
@@ -130,12 +132,27 @@ test.describe.skip(`Card screenshots`, () => {
   });
 })
 
+test.describe.skip(`Special categories tab tests`, () => {
+  // Здесь можно все ссылки проверить
+
+  test(`Click on a special card link`, async ({ page }) => {
+    const card = await buyPage.getDiscountCardByName('For startups')
+
+    await buyPage.clickTabByName('Special Categories')
+    await card.clickLearnMoreLink()
+
+    await expect(page).toHaveURL(/.*\/store\/startups.*/)
+  });
+
+})
+
 test.describe(`Further information block tests`, () => {
   // Сделать скриншот блока
   // Проверить работу ссылок
   // Проверить работу кнопки "Contact us"
 })
 
+// Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
 
 
 
