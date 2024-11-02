@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { BuyPage } from "../pages/BuyPage";
-import { ProductName, SubscriptionType, PRODUCT_NAMES, LINKS } from "../utils/types";
+import { ProductName, SubscriptionType, PRODUCT_NAMES, LINKS, LinkName } from "../utils/types";
 import { ProductCard } from "../components/ProductCard";
 
 // Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
@@ -44,7 +44,7 @@ test.describe(`Card navigation tests`, () => {
   [
     { linkName: 'Get quote', urlRegex: /.*jetbrains\.com\/shop\/customer.*/ },
     { linkName: 'Learn more', urlRegex: /.*jetbrains\.com\/all.*/ },
-  ].forEach(({ linkName, urlRegex }) => {
+  ].forEach(({ linkName, urlRegex }: {linkName: LinkName, urlRegex: RegExp}) => {
     test(`Click link by name: ${linkName}`, async ({ page }) => {
       await allProductsCard.clickLinkByName(linkName);
 

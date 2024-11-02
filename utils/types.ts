@@ -13,6 +13,10 @@ export type Interval =
     | "Monthly billing"
     | "Yearly billing";
 
+export type LinkName =
+    | "Get quote"
+    | "Learn more";
+
 
 export interface SubscriptionType {
     interval: Interval,
@@ -30,3 +34,5 @@ export enum PRODUCT_NAMES {
     CLION = "CLion",
     PYCHARM = "PyCharm Professional",
 }
+
+
