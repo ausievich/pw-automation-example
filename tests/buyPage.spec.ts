@@ -27,8 +27,8 @@ test.beforeEach(async ({ page, context }) => {
   await page.goto(pageUrl);
 
   buyPage = new BuyPage(page);
-  productCard = buyPage.getCardByName(productName);
-  allProductsCard = buyPage.getCardByName(allProductsCardName);
+  productCard = buyPage.productCard;
+  allProductsCard = buyPage.allProductsPackCard;
 
 });
 
@@ -95,10 +95,10 @@ test.describe(`Special categories tab tests`, () => {
   // Здесь можно все ссылки проверить
 
   test.skip(`Click on a special card link`, async ({ page }) => {
-    const card = buyPage.getDiscountCardByName('For startups')
+    const card = await buyPage.getDiscountCardByName('For startups')
 
     await buyPage.clickTabByName('Special Categories')
-    await card.clickLinkByName('Learn more')
+    await card.clickLearnMoreLink()
 
     await expect(page).toHaveURL(/.*\/store\/startups.*/)
   });
