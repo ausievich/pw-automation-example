@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { BuyPage } from "../pages/BuyPage";
-import { ProductName, SubscriptionType } from "../utils/types";
+import { ProductName, SubscriptionType, PRODUCT_NAMES, LINKS } from "../utils/types";
 import { ProductCard } from "../components/ProductCard";
 
 // Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
 
-const productName = process.env.PRODUCT_NAME as ProductName;
-const pageUrl = process.env.PAGE_URL;
+const productName = PRODUCT_NAMES[process.env.PRODUCT_NAME];
+const pageUrl = LINKS[process.env.PRODUCT_NAME];
 
 const allProductsCardName: ProductName = 'All Products Pack';
 
