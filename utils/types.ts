@@ -13,13 +13,26 @@ export type Interval =
     | "Monthly billing"
     | "Yearly billing";
 
+export type LinkName =
+    | "Get quote"
+    | "Learn more";
+
 
 export interface SubscriptionType {
     interval: Interval,
     tabName: TabName
 }
 
-export interface PageConfigurations {
-    buyPageUrl: string,
-    productName: ProductName
+export enum LINKS {
+    IDEA = "https://www.jetbrains.com/idea/buy/",
+    CLION = "https://www.jetbrains.com/clion/buy/",
+    PYCHARM = "https://www.jetbrains.com/pycharm/buy/",
 }
+
+export enum PRODUCT_NAMES {
+    IDEA = "IntelliJ IDEA Ultimate",
+    CLION = "CLion",
+    PYCHARM = "PyCharm Professional",
+}
+
+

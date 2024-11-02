@@ -1,58 +1,47 @@
-import { Page } from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 import { PricesBlock } from "./PricesBlock"
-import { CardName } from "../utils/types";
+import { ProductName, LinkName } from "../utils/types";
 
 export class ProductCard {
-    private page: Page;
-    private baseSelector: string;
+    readonly page: Page;
+    readonly self: Locator;
+    readonly title: Locator;
+    readonly buyButton: Locator;
+    readonly priceTag: Locator;
+    readonly checkbox: Locator;
+    readonly pricesBlock: PricesBlock;
+    readonly getQuoteLink: Locator;
+    readonly learnMoreLink: Locator;
 
-    constructor(page: Page, cardName: CardName) {
+    constructor(page: Page, cardName: ProductName) {
+        const baseLocator = `//div[@class="wt-css-content-switcher__block"]//h3[contains(text(), "${cardName}")]/ancestor::div[contains(@data-test, 'product-card')]`;
+
         this.page = page;
-        this.baseSelector = `//div[@class="wt-css-content-switcher__block"]//h3[contains(text(), "${cardName}")]/ancestor::div[contains(@data-test, 'product-card')]`;
-    }
+        this.self = page.locator(`${baseLocator}`);
+        this.title = page.locator(`${baseLocator}//h3`);
 
-    get self() {
-        return this.page.locator(`${this.baseSelector}`);
-    }
+        this.buyButton = page.locator(`${baseLocator}//a[@data-test="product-card-footer-buy-button"]`);
+        this.priceTag = page.locator(`${baseLocator}//div[@data-test="product-price"]`);
+        this.checkbox = page.locator(`${baseLocator}//span[@data-test="checkbox"]`)
 
-    get title() {
-        return this.page.locator(`${this.baseSelector}//h3`);
-    }
+        this.pricesBlock = new PricesBlock(page, baseLocator);
 
-    get priceTag() {
-        return this.page.locator(`${this.baseSelector}//div[@data-test="product-price"]`);
-    }
+        this.getQuoteLink = this.page.locator(`${baseLocator}//a[contains(@href, 'shop/quote')]`);
+        this.learnMoreLink = this.page.locator(`${baseLocator}//a[contains(@href, 'all')]`)
 
-    get buyButton() {
-        return this.page.locator(`${this.baseSelector}//a[@data-test="product-card-footer-buy-button"]`)
-    }
-
-    get checkbox() {
-        return this.page.locator(`${this.baseSelector}//span[@data-test="checkbox"]`)
-    }
-
-    get getQuoteLink() {
-        return this.page.locator(`${this.baseSelector}//a[contains(text(), 'Get quote')]`)
-    }
-
-    get learnMoreLink() {
-        return this.page.locator(`${this.baseSelector}//a[contains(text(), 'Learn more')]`)
-    }
-
-    get pricesBlock() {
-        return new PricesBlock(this.page, this.baseSelector);
     }
 
     async clickCheckbox() {
-        await this.checkbox.click()
+        await this.checkbox.click();
     }
 
     async clickBuyButton() {
-        await this.buyButton.click()
+        await this.buyButton.click();
     }
 
-    async clickLinkByName(name: string){
-        await this.page.locator(`${this.baseSelector}//a[contains(text(), '${name}')]`).click()
+    async clickLinkByName(name: LinkName){
+        if (name === 'Get quote') { await this.getQuoteLink.click() }
+        if (name === 'Learn more') { await this.learnMoreLink.click() }
     }
 
 }

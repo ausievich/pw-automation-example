@@ -1,12 +1,12 @@
-import {test, expect, Page} from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { BuyPage } from "../pages/BuyPage";
-import { ProductName, SubscriptionType, PageConfigurations } from "../utils/types";
-import {ProductCard} from "../components/ProductCard";
+import { ProductName, SubscriptionType, PRODUCT_NAMES, LINKS, LinkName } from "../utils/types";
+import { ProductCard } from "../components/ProductCard";
 
 // Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
 
-const productName = process.env.PRODUCT_NAME as ProductName;
-const pageUrl = process.env.PAGE_URL;
+const productName = PRODUCT_NAMES[process.env.PRODUCT_NAME];
+const pageUrl = LINKS[process.env.PRODUCT_NAME];
 
 const allProductsCardName: ProductName = 'All Products Pack';
 
@@ -27,8 +27,8 @@ test.beforeEach(async ({ page, context }) => {
   await page.goto(pageUrl);
 
   buyPage = new BuyPage(page);
-  productCard = buyPage.getCardByName(productName);
-  allProductsCard = buyPage.getCardByName(allProductsCardName);
+  productCard = buyPage.productCard;
+  allProductsCard = buyPage.allProductsPackCard;
 
 });
 
@@ -44,7 +44,7 @@ test.describe(`Card navigation tests`, () => {
   [
     { linkName: 'Get quote', urlRegex: /.*jetbrains\.com\/shop\/customer.*/ },
     { linkName: 'Learn more', urlRegex: /.*jetbrains\.com\/all.*/ },
-  ].forEach(({ linkName, urlRegex }) => {
+  ].forEach(({ linkName, urlRegex }: {linkName: LinkName, urlRegex: RegExp}) => {
     test(`Click link by name: ${linkName}`, async ({ page }) => {
       await allProductsCard.clickLinkByName(linkName);
 
@@ -95,10 +95,10 @@ test.describe(`Special categories tab tests`, () => {
   // Здесь можно все ссылки проверить
 
   test.skip(`Click on a special card link`, async ({ page }) => {
-    const card = buyPage.getDiscountCardByName('For startups')
+    const card = await buyPage.getDiscountCardByName('For startups')
 
     await buyPage.clickTabByName('Special Categories')
-    await card.clickLinkByName('Learn more')
+    await card.clickLearnMoreLink()
 
     await expect(page).toHaveURL(/.*\/store\/startups.*/)
   });
@@ -106,9 +106,8 @@ test.describe(`Special categories tab tests`, () => {
 })
 
 test.describe.skip(`Card screenshots`, () => {
-  // Попробовать запустить в ci
-  // Задать конфигурацию браузера в конфиге
-
+  // Попробовать разобраться с запуском в ci
+  
   const subscriptionTypes: SubscriptionType[] = [
     { interval: 'Monthly billing', tabName: 'For Individual Use' },
     { interval: 'Monthly billing', tabName: 'For Organizations' },
@@ -133,7 +132,7 @@ test.describe.skip(`Card screenshots`, () => {
   });
 })
 
-test.describe(`Further information block tests ${productName}`, () => {
+test.describe(`Further information block tests`, () => {
   // Сделать скриншот блока
   // Проверить работу ссылок
   // Проверить работу кнопки "Contact us"

@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:idea": "PAGE_URL=https://www.jetbrains.com/idea/buy/ PRODUCT_NAME='IntelliJ IDEA Ultimate' npx playwright test",
-    "test:clion": "PAGE_URL=https://www.jetbrains.com/clion/buy/ PRODUCT_NAME='CLion' npx playwright test",
-    "test:pycharm": "PAGE_URL=https://www.jetbrains.com/pycharm/buy/ PRODUCT_NAME='PyCharm Professional' npx playwright test"
+    "test:idea": "PRODUCT_NAME='IDEA' npx playwright test",
+    "test:clion": "PRODUCT_NAME='CLION' npx playwright test",
+    "test:pycharm": "PRODUCT_NAME='PYCHARM' npx playwright test"
   },
   "keywords": [],
   "author": "",

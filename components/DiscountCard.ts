@@ -1,20 +1,19 @@
-import {Page} from "@playwright/test";
+import {Page, Locator} from "@playwright/test";
 
 export class DiscountCard {
-    private page: Page;
-    private baseSelector: string;
+    readonly page: Page;
+    readonly learnMoreLink: Locator;
 
     constructor(page: Page, name: string) {
+        // Подумать, можно ли адаптировать для разных языков
+        const baseLocator = `//div[@class='wt-css-content-switcher__block']//h3[contains(text(), '${name}')]/..`;
+
         this.page = page;
-        this.baseSelector = `//div[@class='wt-css-content-switcher__block']//h3[contains(text(), '${name}')]/..`;
+        this.learnMoreLink = page.locator(`${baseLocator}//a`)
     }
 
-    get learnMoreLink() {
-        return this.page.locator(`${this.baseSelector}//a[contains(text(), 'Learn more')]`)
-    }
-
-    async clickLinkByName(name: string){
-        await this.page.locator(`${this.baseSelector}//a[contains(text(), '${name}')]`).click()
+    async clickLearnMoreLink(){
+        await this.learnMoreLink.click()
     }
 
 }
