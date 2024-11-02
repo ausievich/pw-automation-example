@@ -94,6 +94,8 @@ test.describe(`Behaviour tests`, () => {
 })
 
 test.describe(`Screenshot tests`, () => {
+  // Спросить отчего зависит наличие US перед ценой на карточке
+
   const subscriptionTypes: SubscriptionType[] = [
     { interval: 'Monthly billing', tabName: 'For Individual Use' },
     { interval: 'Monthly billing', tabName: 'For Organizations' },

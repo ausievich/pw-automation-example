@@ -40,8 +40,6 @@ jobs:
           name: node_modules
       - name: Extract node_modules
         run: tar -xzf node_modules.tar.gz
-#      - name: Install Playwright Browsers
-#        run: npx playwright install chromium --with-deps
       - name: Run test for IntelliJ IDEA Ultimate
         run: npm run test:idea
       - uses: actions/upload-artifact@v4
@@ -68,8 +66,6 @@ jobs:
           name: node_modules
       - name: Extract node_modules
         run: tar -xzf node_modules.tar.gz
-#      - name: Install Playwright Browsers
-#        run: npx playwright install chromium --with-deps
       - name: Run test for CLion
         run: npm run test:clion
       - uses: actions/upload-artifact@v4
@@ -96,8 +92,6 @@ jobs:
           name: node_modules
       - name: Extract node_modules
         run: tar -xzf node_modules.tar.gz
-#      - name: Install Playwright Browsers
-#        run: npx playwright install chromium --with-deps
       - name: Run test for PyCharm Professional
         run: npm run test:pycharm
       - uses: actions/upload-artifact@v4
