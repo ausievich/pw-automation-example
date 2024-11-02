@@ -21,6 +21,18 @@ test.beforeEach(async ({ page, context }) => {
       value: 'true',
       domain: '.jetbrains.com',
       path: '/',
+    },
+    {
+      name: 'cookie_country',
+      value: 'AM',
+      domain: '.jetbrains.com',
+      path: '/',
+    },
+    {
+      name: 'cf_country-region',
+      value: 'AM-ER',
+      domain: '.jetbrains.com',
+      path: '/',
     }
   ]);
 
@@ -33,6 +45,7 @@ test.beforeEach(async ({ page, context }) => {
 });
 
 test.describe(`Card navigation tests`, () => {
+  // Добавить для второй карточки
   test('Click on buy button', async ({ page }) => {
     const urlRegex = /.*www\.jetbrains\.com\/shop\/customer.*/;
 
@@ -105,7 +118,7 @@ test.describe(`Special categories tab tests`, () => {
 
 })
 
-test.describe(`Card screenshots`, () => {
+test.describe.only(`Card screenshots`, () => {
   const subscriptionTypes: SubscriptionType[] = [
     { interval: 'Monthly billing', tabName: 'For Individual Use' },
     { interval: 'Monthly billing', tabName: 'For Organizations' },
