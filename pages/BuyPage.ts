@@ -1,17 +1,17 @@
-import {Page} from "@playwright/test";
+import {Page, Locator} from "@playwright/test";
 import {ProductCard} from "../components/ProductCard";
 import {DiscountCard} from "../components/DiscountCard";
 import { TabName, Interval, ProductName } from "../utils/types";
 
 export class BuyPage {
-    protected page: Page;
+    readonly page: Page;
+    readonly heading: Locator;
+
 
     constructor(page: Page) {
         this.page = page;
-    }
+        this.heading = page.locator(`//h1`);
 
-    get heading() {
-        return this.page.locator(`//h1`);
     }
 
     async clickTabByName(name: TabName) {
@@ -24,11 +24,11 @@ export class BuyPage {
 
     }
 
-    getCardByName(name: ProductName) {
+    async getCardByName(name: ProductName) {
         return new ProductCard(this.page, name);
     }
 
-    getDiscountCardByName(name: string) {
+    async getDiscountCardByName(name: string) {
         return new DiscountCard(this.page, name);
     }
 
