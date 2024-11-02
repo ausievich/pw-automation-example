@@ -19,6 +19,18 @@ test.beforeEach(async ({ page, context }) => {
       value: 'true',
       domain: '.jetbrains.com',
       path: '/',
+    },
+    {
+      name: 'cf_country-region',
+      value: 'AM-ER',
+      domain: '.jetbrains.com',
+      path: '/'
+    },
+    {
+      name: 'cookie_country',
+      value: 'AM',
+      domain: '.jetbrains.com',
+      path: '/'
     }
   ]);
 
