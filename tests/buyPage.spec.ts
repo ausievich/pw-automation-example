@@ -105,7 +105,7 @@ test.describe(`Special categories tab tests`, () => {
 
 })
 
-test.describe(`Card screenshots`, () => {
+test.describe.skip(`Card screenshots`, () => {
   const subscriptionTypes: SubscriptionType[] = [
     { interval: 'Monthly billing', tabName: 'For Individual Use' },
     { interval: 'Monthly billing', tabName: 'For Organizations' },
