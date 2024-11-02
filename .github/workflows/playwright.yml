@@ -8,7 +8,7 @@ on:
 
 jobs:
   install:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -25,7 +25,7 @@ jobs:
 
   test_idea:
     needs: install
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.48.1-noble
       options: --user 1001
@@ -53,7 +53,7 @@ jobs:
 
   test_clion:
     needs: install
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.48.1-noble
       options: --user 1001
@@ -81,7 +81,7 @@ jobs:
 
   test_pycharm:
     needs: install
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.48.1-noble
       options: --user 1001
