@@ -45,12 +45,18 @@ export default defineConfig({
 
     // {
     //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
+    //   use: {
+    //     ...devices['Desktop Firefox'],
+    //     viewport: { width: 1920, height: 1080 },
+    //   },
     // },
     //
     // {
     //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
+    //   use: {
+    //     ...devices['Desktop Safari'],
+    //     viewport: { width: 1920, height: 1080 },
+    //   },
     // },
 
     /* Test against mobile viewports. */

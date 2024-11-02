@@ -93,7 +93,7 @@ test.describe(`Behaviour tests`, () => {
 
 })
 
-test.describe.skip(`Screenshot tests`, () => {
+test.describe(`Screenshot tests`, () => {
   const subscriptionTypes: SubscriptionType[] = [
     { interval: 'Monthly billing', tabName: 'For Individual Use' },
     { interval: 'Monthly billing', tabName: 'For Organizations' },
