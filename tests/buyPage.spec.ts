@@ -13,6 +13,7 @@ let productCard: ProductCard;
 let allProductsCard: ProductCard;
 
 test.beforeEach(async ({ page, context }) => {
+
   await context.addCookies([
     {
       name: 'jb_cookies_consent_closed',
@@ -21,17 +22,11 @@ test.beforeEach(async ({ page, context }) => {
       path: '/',
     },
     {
-      name: 'cf_country-region',
-      value: 'AM-ER',
-      domain: '.jetbrains.com',
-      path: '/'
+      name: 'ncountryCodeCookie',
+      value: 'US',
+      domain: 'www.jetbrains.com',
+      path: '/',
     },
-    {
-      name: 'cookie_country',
-      value: 'AM',
-      domain: '.jetbrains.com',
-      path: '/'
-    }
   ]);
 
   await page.goto(pageUrl);
@@ -105,9 +100,7 @@ test.describe(`Behaviour tests`, () => {
 
 })
 
-test.describe.skip(`Screenshot tests`, () => {
-  // Спросить от чего зависит наличие US перед ценой на карточке
-
+test.describe(`Screenshot tests`, () => {
   const subscriptionTypes: SubscriptionType[] = [
     { interval: 'Monthly billing', tabName: 'For Individual Use' },
     { interval: 'Monthly billing', tabName: 'For Organizations' },
