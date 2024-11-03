@@ -32,7 +32,7 @@ export default defineConfig({
     trace: 'on-first-retry',
 
     // Emulates the user locale.
-    locale: 'de-DE',
+    // locale: 'de-DE',
 
   },
 

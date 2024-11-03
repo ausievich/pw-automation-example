@@ -20,7 +20,13 @@ test.beforeEach(async ({ page, context }) => {
       value: 'true',
       domain: '.jetbrains.com',
       path: '/',
-    }
+    },
+    {
+      name: 'ncountryCodeCookie',
+      value: 'US',
+      domain: 'www.jetbrains.com',
+      path: '/',
+    },
   ]);
 
   await page.goto(pageUrl);
@@ -95,25 +101,6 @@ test.describe(`Behaviour tests`, () => {
 })
 
 test.describe(`Screenshot tests`, () => {
-  // Спросить от чего зависит наличие US перед ценой на карточке
-  test.use({ locale: 'de-DE' });
-
-  // {
-  //   "country": {
-  //   "iso": "US",
-  //       "printableName": "United States",
-  //       "localName": "United States",
-  //       "region": "US",
-  //       "allow_personal_quotes": true,
-  //       "salesRegion": "US"
-  // },
-  //   "currency": {
-  //   "iso": "USD",
-  //       "symbol": "$",
-  //       "prefixSymbol": true
-  // }
-  // },
-
   const subscriptionTypes: SubscriptionType[] = [
     { interval: 'Monthly billing', tabName: 'For Individual Use' },
     { interval: 'Monthly billing', tabName: 'For Organizations' },
