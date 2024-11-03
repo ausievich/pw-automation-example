@@ -125,6 +125,8 @@ test.describe(`Screenshot tests`, () => {
       await expect(allProductsCard.self).toHaveScreenshot(['cards', productName, `${allProductsCardName}_${tabName}_${interval}.png`]);
     });
   });
+
+  // Можно дополнительно снять скриншоты карточек с активным чекбоксом
 })
 
 test.describe.skip(`Special categories tab tests`, () => {
