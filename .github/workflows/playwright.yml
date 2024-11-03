@@ -23,7 +23,7 @@ jobs:
           name: node_modules
           path: node_modules.tar.gz
 
-  test:
+  buy_page_test:
     needs: install
     runs-on: ubuntu-latest
     container:
