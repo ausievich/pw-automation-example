@@ -33,7 +33,7 @@ export default defineConfig({
 
     // Emulates the user locale.
     // locale: 'de-DE',
-
+    headless: true
   },
 
   /* Configure projects for major browsers */
