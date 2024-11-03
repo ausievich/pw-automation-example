@@ -13,24 +13,13 @@ let productCard: ProductCard;
 let allProductsCard: ProductCard;
 
 test.beforeEach(async ({ page, context }) => {
+
   await context.addCookies([
     {
       name: 'jb_cookies_consent_closed',
       value: 'true',
       domain: '.jetbrains.com',
       path: '/',
-    },
-    {
-      name: 'cf_country-region',
-      value: 'AM-ER',
-      domain: '.jetbrains.com',
-      path: '/'
-    },
-    {
-      name: 'cookie_country',
-      value: 'AM',
-      domain: '.jetbrains.com',
-      path: '/'
     }
   ]);
 
@@ -105,8 +94,25 @@ test.describe(`Behaviour tests`, () => {
 
 })
 
-test.describe.skip(`Screenshot tests`, () => {
+test.describe(`Screenshot tests`, () => {
   // Спросить от чего зависит наличие US перед ценой на карточке
+  test.use({ locale: 'de-DE' });
+
+  // {
+  //   "country": {
+  //   "iso": "US",
+  //       "printableName": "United States",
+  //       "localName": "United States",
+  //       "region": "US",
+  //       "allow_personal_quotes": true,
+  //       "salesRegion": "US"
+  // },
+  //   "currency": {
+  //   "iso": "USD",
+  //       "symbol": "$",
+  //       "prefixSymbol": true
+  // }
+  // },
 
   const subscriptionTypes: SubscriptionType[] = [
     { interval: 'Monthly billing', tabName: 'For Individual Use' },
