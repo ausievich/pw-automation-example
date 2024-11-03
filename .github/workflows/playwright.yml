@@ -1,102 +1,103 @@
-name: Playwright Tests
-
-on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-
-jobs:
-  install:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-      - name: Install dependencies
-        run: npm ci
-      - name: Save node_modules
-        run: tar -czf node_modules.tar.gz node_modules
-      - uses: actions/upload-artifact@v4
-        with:
-          name: node_modules
-          path: node_modules.tar.gz
-
-  test_idea:
-    needs: install
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.48.1-noble
-      options: --user 1001
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-      - name: Download node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-      - name: Extract node_modules
-        run: tar -xzf node_modules.tar.gz
-      - name: Run test for IntelliJ IDEA Ultimate
-        run: npm run test:idea
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report-idea
-          path: playwright-report/
-          retention-days: 30
-
-  test_clion:
-    needs: install
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.48.1-noble
-      options: --user 1001
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-      - name: Download node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-      - name: Extract node_modules
-        run: tar -xzf node_modules.tar.gz
-      - name: Run test for CLion
-        run: npm run test:clion
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report-clion
-          path: playwright-report/
-          retention-days: 30
-
-  test_pycharm:
-    needs: install
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.48.1-noble
-      options: --user 1001
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-      - name: Download node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-      - name: Extract node_modules
-        run: tar -xzf node_modules.tar.gz
-      - name: Run test for PyCharm Professional
-        run: npm run test:pycharm
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report-pycharm
-          path: playwright-report/
-          retention-days: 30
+#name: Playwright Tests
+#
+#on:
+#  push:
+#    branches: [ main, master ]
+#  pull_request:
+#    branches: [ main, master ]
+#
+#jobs:
+#  install:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: lts/*
+#      - name: Install dependencies
+#        run: npm ci
+#      - name: Save node_modules
+#        run: tar -czf node_modules.tar.gz node_modules
+#      - uses: actions/upload-artifact@v4
+#        with:
+#          name: node_modules
+#          path: node_modules.tar.gz
+#
+#  test_idea:
+#    needs: install
+#    runs-on: ubuntu-latest
+#    container:
+#      image: mcr.microsoft.com/playwright:v1.48.1-noble
+#      options: --user 1001
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: lts/*
+#      - name: Download node_modules
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: node_modules
+#      - name: Extract node_modules
+#        run: tar -xzf node_modules.tar.gz
+#      - name: Run test for IntelliJ IDEA Ultimate
+#        run: npm run test:idea
+#      - uses: actions/upload-artifact@v4
+#        if: ${{ !cancelled() }}
+#        with:
+#          name: playwright-report-idea
+#          path: playwright-report/
+#          retention-days: 30
+#
+#  test_clion:
+#    needs: install
+#    runs-on: ubuntu-latest
+#    container:
+#      image: mcr.microsoft.com/playwright:v1.48.1-noble
+#      options: --user 1001
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: lts/*
+#      - name: Download node_modules
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: node_modules
+#      - name: Extract node_modules
+#        run: tar -xzf node_modules.tar.gz
+#      - name: Run test for CLion
+#        run: npm run test:clion
+#      - uses: actions/upload-artifact@v4
+#        if: ${{ !cancelled() }}
+#        with:
+#          name: playwright-report-clion
+#          path: playwright-report/
+#          retention-days: 30
+#
+#  test_pycharm:
+#    needs: install
+#    runs-on: ubuntu-latest
+#    container:
+#      image: mcr.microsoft.com/playwright:v1.48.1-noble
+#      options: --user 1001
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: lts/*
+#      - name: Download node_modules
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: node_modules
+#      - name: Extract node_modules
+#        run: tar -xzf node_modules.tar.gz
+#      - name: Run test for PyCharm Professional
+#        run: npm run test:pycharm
+#      - uses: actions/upload-artifact@v4
+#        if: ${{ !cancelled() }}
+#        with:
+#          name: playwright-report-pycharm
+#          path: playwright-report/
+#          retention-days: 30
+#

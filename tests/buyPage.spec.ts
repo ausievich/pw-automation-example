@@ -40,6 +40,7 @@ test.beforeEach(async ({ page, context }) => {
 test.describe(`Navigation tests`, () => {
 
   [productName, allProductsCardName].forEach((cardName) => {
+
     test(`Click on buy button: ${cardName}`, async ({ page }) => {
       const urlRegex = /.*www\.jetbrains\.com\/shop\/customer.*/;
       const card = await buyPage.getCardByName(cardName);
@@ -52,6 +53,7 @@ test.describe(`Navigation tests`, () => {
     test(`Navigate "AI Pro" link ${cardName}`, async ({ page }) => {
       // Проверим переход по ссылке "JetBrains AI Pro"
     });
+
   });
 
   [
