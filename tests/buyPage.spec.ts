@@ -135,19 +135,14 @@ test.describe.skip(`Currencies tests`, () => {
   // Проверить смену валюты в зависимости от локации (ncountryCodeCookie)
   // Можно на одной любой карточке
   // USD, EUR, GBP, CNY, CZK, JPY
+
 })
 
-test.describe.skip(`Special categories tab tests`, () => {
-  // Здесь можно все ссылки проверить
-
-  test(`Click on a special card link`, async ({ page }) => {
-    const card = await buyPage.getDiscountCardByName('For startups')
-
-    await buyPage.clickTabByName('Special Categories')
-    await card.clickLearnMoreLink()
-
-    await expect(page).toHaveURL(/.*\/store\/startups.*/)
-  });
+test.describe(`Special categories tab tests`, () => {
+  // Сделать один общий кадр этого раздела
+  // Нужен для него data-test атрибут
+  // Аналогично для второго special-таба (Students, Teachers and Community)
+  // Учесть небольшие отличия idea, clion, pycharm
 
 })
 
@@ -155,6 +150,7 @@ test.describe(`Further information block tests`, () => {
   // Сделать скриншот блока
   // Проверить работу ссылок
   // Проверить работу кнопки "Contact us"
+
 })
 
 // Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
