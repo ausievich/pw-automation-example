@@ -126,9 +126,26 @@ test.describe(`Screenshot tests`, () => {
       const snapshotPath = ['cards', allProductsCardName, `${allProductsCardName}_${tabName}_${interval}.png`];
       await expect(allProductsCard.self).toHaveScreenshot(snapshotPath,{ mask: [allProductsCard.buyButton] });
     });
-  });
 
-  // Можно дополнительно снять скриншоты карточек с активным чекбоксом
+    test(`Supercharge - ${productName} - ${tabName} (${interval})`, async () => {
+      await buyPage.clickTabByName(tabName);
+      await buyPage.clickIntervalByName(interval);
+      await productCard.clickCheckbox();
+
+      const snapshotPath = ['cards', productName, 'Supercharge',`${productName}_${tabName}_${interval}.png`];
+      await expect(productCard.self).toHaveScreenshot(snapshotPath);
+    });
+
+    test(`Supercharge - ${allProductsCardName} - ${tabName} (${interval})`, async () => {
+      await buyPage.clickTabByName(tabName);
+      await buyPage.clickIntervalByName(interval);
+      await allProductsCard.clickCheckbox();
+
+      const snapshotPath = ['cards', allProductsCardName, 'Supercharge', `${allProductsCardName}_${tabName}_${interval}.png`];
+      await expect(allProductsCard.self).toHaveScreenshot(snapshotPath,{ mask: [allProductsCard.buyButton, allProductsCard.checkbox] });
+    });
+
+  });
 })
 
 test.describe(`Currency tests`, () => {
