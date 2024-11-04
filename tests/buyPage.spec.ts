@@ -151,7 +151,7 @@ test.describe(`Currency tests`, () => {
       await expect(productCard.self).toHaveScreenshot(snapshotPath);
     })
 
-    test.only(`All Products Card currency: ${countryCode}`, async ({ page, context }) => {
+    test(`All Products Card currency: ${countryCode}`, async ({ page, context }) => {
       await context.addCookies([
         {
           name: 'ncountryCodeCookie',
