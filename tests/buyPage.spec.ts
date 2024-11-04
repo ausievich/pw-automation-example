@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Locator } from '@playwright/test';
 import { BuyPage } from "../pages/BuyPage";
 import { ProductName, SubscriptionType, PRODUCT_NAMES, LINKS, LinkName } from "../utils/types";
 import { ProductCard } from "../components/ProductCard";
@@ -115,14 +115,20 @@ test.describe(`Screenshot tests`, () => {
       await buyPage.clickTabByName(tabName);
       await buyPage.clickIntervalByName(interval);
 
-      await expect(productCard.self).toHaveScreenshot(['cards', productName, `${productName}_${tabName}_${interval}.png`]);
+
+      await expect(productCard.self)
+          .toHaveScreenshot(['cards', productName, `${productName}_${tabName}_${interval}.png`]);
     });
 
     test(`${allProductsCardName} - ${tabName} (${interval})`, async () => {
       await buyPage.clickTabByName(tabName);
       await buyPage.clickIntervalByName(interval);
 
-      await expect(allProductsCard.self).toHaveScreenshot(['cards', productName, `${allProductsCardName}_${tabName}_${interval}.png`]);
+      await expect(allProductsCard.self)
+          .toHaveScreenshot(['cards', allProductsCardName, `${allProductsCardName}_${tabName}_${interval}.png`],
+              {
+            mask: [allProductsCard.buyButton]
+          });
     });
   });
 
