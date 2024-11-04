@@ -115,20 +115,16 @@ test.describe(`Screenshot tests`, () => {
       await buyPage.clickTabByName(tabName);
       await buyPage.clickIntervalByName(interval);
 
-
-      await expect(productCard.self)
-          .toHaveScreenshot(['cards', productName, `${productName}_${tabName}_${interval}.png`]);
+      const snapshotPath = ['cards', productName, `${productName}_${tabName}_${interval}.png`];
+      await expect(productCard.self).toHaveScreenshot(snapshotPath);
     });
 
     test(`${allProductsCardName} - ${tabName} (${interval})`, async () => {
       await buyPage.clickTabByName(tabName);
       await buyPage.clickIntervalByName(interval);
 
-      await expect(allProductsCard.self)
-          .toHaveScreenshot(['cards', allProductsCardName, `${allProductsCardName}_${tabName}_${interval}.png`],
-              {
-            mask: [allProductsCard.buyButton]
-          });
+      const snapshotPath = ['cards', allProductsCardName, `${allProductsCardName}_${tabName}_${interval}.png`];
+      await expect(allProductsCard.self).toHaveScreenshot(snapshotPath,{ mask: [allProductsCard.buyButton] });
     });
   });
 
@@ -139,7 +135,6 @@ test.describe.skip(`Currencies tests`, () => {
   // Проверить смену валюты в зависимости от локации (ncountryCodeCookie)
   // Можно на одной любой карточке
   // USD, EUR, GBP, CNY, CZK, JPY
-
 })
 
 test.describe.skip(`Special categories tab tests`, () => {
