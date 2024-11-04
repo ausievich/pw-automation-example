@@ -20,7 +20,8 @@ export class ProductCard {
         this.self = page.locator(`${baseLocator}`);
         this.title = page.locator(`${baseLocator}//h3`);
 
-        this.buyButton = page.locator(`${baseLocator}//a[@data-test="product-card-footer-buy-button"]`);
+        //this.buyButton = page.locator(`${baseLocator}//a[@data-test="product-card-footer-buy-button"]`);
+        this.buyButton = page.locator(`${baseLocator}//*[@data-test="buy-page-buy-action-button" or @data-test="product-card-footer-buy-button"]`);
         this.priceTag = page.locator(`${baseLocator}//div[@data-test="product-price"]`);
         this.checkbox = page.locator(`${baseLocator}//span[@data-test="checkbox"]`)
 
