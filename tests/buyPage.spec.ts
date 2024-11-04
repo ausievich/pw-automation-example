@@ -50,7 +50,7 @@ test.describe(`Navigation tests`, () => {
       await expect(page).toHaveURL(urlRegex)
     });
 
-    test(`Navigate "AI Pro" link ${cardName}`, async ({ page }) => {
+    test(`Navigate "AI Pro" link ${cardName}`, async () => {
       // Проверим переход по ссылке "JetBrains AI Pro"
     });
 
@@ -71,32 +71,32 @@ test.describe(`Navigation tests`, () => {
 
 test.describe(`Behaviour tests`, () => {
 
-  test('Click on checkbox hides "Get quote" link', async ({ page }) => {
+  test('Click on checkbox hides "Get quote" link', async () => {
     await productCard.clickCheckbox();
 
     await expect(productCard.getQuoteLink).not.toBeVisible();
   });
 
-  test('Click on checkbox does not hide "Learn more" link', async ({ page }) => {
+  test('Click on checkbox does not hide "Learn more" link', async () => {
     await allProductsCard.clickCheckbox();
 
     await expect(allProductsCard.getQuoteLink).not.toBeVisible();
     await expect(allProductsCard.learnMoreLink).toBeVisible();
   });
 
-  test(`Monthly tab hides annual prices`, async ({ page }) => {
+  test(`Monthly tab hides annual prices`, async () => {
     await buyPage.clickIntervalByName('Monthly billing')
 
     await expect(productCard.pricesBlock.secondYearPrice).not.toBeVisible();
     await expect(productCard.pricesBlock.thirdYearPrice).not.toBeVisible();
   });
 
-  test('Show "Includes 18 tools" dropdown', async ({ page }) => {
+  test('Show "Includes 18 tools" dropdown', async () => {
     // В тесте проверить работу компонента "Includes 18 tools" в карточке "All Products Pack"
     // По клику компонент раскрывается.
   });
 
-  test('Hide "Includes 18 tools" dropdown', async ({ page }) => {
+  test('Hide "Includes 18 tools" dropdown', async () => {
     // Элемент сворачивается
   });
 
@@ -127,6 +127,13 @@ test.describe(`Screenshot tests`, () => {
   });
 
   // Можно дополнительно снять скриншоты карточек с активным чекбоксом
+})
+
+test.describe.skip(`Currencies tests`, () => {
+  // Проверить смену валюты в зависимости от локации (ncountryCodeCookie)
+  // Можно на одной любой карточке
+  // USD, EUR, GBP, CNY, CZK, JPY
+
 })
 
 test.describe.skip(`Special categories tab tests`, () => {
