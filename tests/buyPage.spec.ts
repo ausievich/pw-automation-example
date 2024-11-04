@@ -131,7 +131,7 @@ test.describe(`Screenshot tests`, () => {
   // Можно дополнительно снять скриншоты карточек с активным чекбоксом
 })
 
-test.describe.skip(`Currencies tests`, () => {
+test.describe(`Currencies tests`, () => {
   // Проверить смену валюты в зависимости от локации (ncountryCodeCookie)
   // Можно на одной любой карточке
   // USD, EUR, GBP, CNY, CZK, JPY
