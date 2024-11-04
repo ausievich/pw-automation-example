@@ -22,14 +22,18 @@ This project contains tests for the **Buy** pages of JetBrains products using Pl
 To run the tests, please refer to the scripts section of the `package.json` file. 
 Screenshots are only intended to be captured in Docker or CI environments to avoid discrepancies in comparisons.
 
-To run tests locally for debugging purposes or to execute them in headed mode, use the following command:
+To run tests locally for debugging purposes or to execute them in headed mode, use the following commands:
 ```bash
 npm run test:idea
+npm run test:clion
+npm run test:pycharm
 ```
 
-To capture screenshots, use the following script:
+To capture screenshots, use the following scripts:
 ```bash
 npm run test:idea:docker
+npm run test:clion:docker
+npm run test:pycharm:docker
 ```
 
 ## Notes
