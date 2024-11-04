@@ -115,38 +115,66 @@ test.describe(`Screenshot tests`, () => {
       await buyPage.clickTabByName(tabName);
       await buyPage.clickIntervalByName(interval);
 
-      await expect(productCard.self).toHaveScreenshot(['cards', productName, `${productName}_${tabName}_${interval}.png`]);
+      const snapshotPath = ['cards', productName, `${productName}_${tabName}_${interval}.png`];
+      await expect(productCard.self).toHaveScreenshot(snapshotPath);
     });
 
     test(`${allProductsCardName} - ${tabName} (${interval})`, async () => {
       await buyPage.clickTabByName(tabName);
       await buyPage.clickIntervalByName(interval);
 
-      await expect(allProductsCard.self).toHaveScreenshot(['cards', productName, `${allProductsCardName}_${tabName}_${interval}.png`]);
+      const snapshotPath = ['cards', allProductsCardName, `${allProductsCardName}_${tabName}_${interval}.png`];
+      await expect(allProductsCard.self).toHaveScreenshot(snapshotPath,{ mask: [allProductsCard.buyButton] });
     });
   });
 
   // Можно дополнительно снять скриншоты карточек с активным чекбоксом
 })
 
-test.describe.skip(`Currencies tests`, () => {
-  // Проверить смену валюты в зависимости от локации (ncountryCodeCookie)
-  // Можно на одной любой карточке
-  // USD, EUR, GBP, CNY, CZK, JPY
+test.describe(`Currency tests`, () => {
+  const countryCodes = ['AM', 'DE', 'GB', 'CN', 'CZ', 'JP'];
 
+  countryCodes.forEach((countryCode) => {
+    test(`Product Card currency: ${countryCode}`, async ({ page, context }) => {
+      await context.addCookies([
+          {
+          name: 'ncountryCodeCookie',
+          value: countryCode,
+          domain: 'www.jetbrains.com',
+          path: '/',
+        },
+      ]);
+
+      await page.goto(pageUrl);
+
+      const snapshotPath = ['cards', productName, 'Currencies', `${productName}_${countryCode}.png`];
+      await expect(productCard.self).toHaveScreenshot(snapshotPath);
+    })
+
+    test(`All Products Card currency: ${countryCode}`, async ({ page, context }) => {
+      await context.addCookies([
+        {
+          name: 'ncountryCodeCookie',
+          value: countryCode,
+          domain: 'www.jetbrains.com',
+          path: '/',
+        },
+      ]);
+
+      await page.goto(pageUrl);
+
+      const snapshotPath = ['cards', allProductsCardName, 'Currencies', `${allProductsCardName}_${countryCode}.png`];
+      await expect(allProductsCard.self).toHaveScreenshot(snapshotPath, { mask: [allProductsCard.buyButton] });
+    })
+
+  })
 })
 
-test.describe.skip(`Special categories tab tests`, () => {
-  // Здесь можно все ссылки проверить
-
-  test(`Click on a special card link`, async ({ page }) => {
-    const card = await buyPage.getDiscountCardByName('For startups')
-
-    await buyPage.clickTabByName('Special Categories')
-    await card.clickLearnMoreLink()
-
-    await expect(page).toHaveURL(/.*\/store\/startups.*/)
-  });
+test.describe(`Special categories tab tests`, () => {
+  // Сделать один общий кадр этого раздела
+  // Нужен для него data-test атрибут
+  // Аналогично для второго special-таба (Students, Teachers and Community)
+  // Учесть небольшие отличия idea, clion, pycharm
 
 })
 
@@ -154,13 +182,10 @@ test.describe(`Further information block tests`, () => {
   // Сделать скриншот блока
   // Проверить работу ссылок
   // Проверить работу кнопки "Contact us"
+
 })
 
 // Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
-
-
-
-
 
 
 
