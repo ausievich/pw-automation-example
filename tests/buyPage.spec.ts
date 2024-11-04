@@ -1,4 +1,4 @@
-import { test, expect, Locator } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { BuyPage } from "../pages/BuyPage";
 import { ProductName, SubscriptionType, PRODUCT_NAMES, LINKS, LinkName } from "../utils/types";
 import { ProductCard } from "../components/ProductCard";
@@ -131,11 +131,43 @@ test.describe(`Screenshot tests`, () => {
   // Можно дополнительно снять скриншоты карточек с активным чекбоксом
 })
 
-test.describe(`Currencies tests`, () => {
-  // Проверить смену валюты в зависимости от локации (ncountryCodeCookie)
-  // Можно на одной любой карточке
-  // USD, EUR, GBP, CNY, CZK, JPY
+test.describe(`Currency tests`, () => {
+  const countryCodes = ['AM', 'DE', 'GB', 'CN', 'CZ', 'JP'];
 
+  countryCodes.forEach((countryCode) => {
+    test(`Product Card currency: ${countryCode}`, async ({ page, context }) => {
+      await context.addCookies([
+          {
+          name: 'ncountryCodeCookie',
+          value: countryCode,
+          domain: 'www.jetbrains.com',
+          path: '/',
+        },
+      ]);
+
+      await page.goto(pageUrl);
+
+      const snapshotPath = ['cards', productName, 'Currencies', `${productName}_${countryCode}.png`];
+      await expect(productCard.self).toHaveScreenshot(snapshotPath);
+    })
+
+    test.only(`All Products Card currency: ${countryCode}`, async ({ page, context }) => {
+      await context.addCookies([
+        {
+          name: 'ncountryCodeCookie',
+          value: countryCode,
+          domain: 'www.jetbrains.com',
+          path: '/',
+        },
+      ]);
+
+      await page.goto(pageUrl);
+
+      const snapshotPath = ['cards', allProductsCardName, 'Currencies', `${allProductsCardName}_${countryCode}.png`];
+      await expect(allProductsCard.self).toHaveScreenshot(snapshotPath, { mask: [allProductsCard.buyButton] });
+    })
+
+  })
 })
 
 test.describe(`Special categories tab tests`, () => {
@@ -154,10 +186,6 @@ test.describe(`Further information block tests`, () => {
 })
 
 // Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
-
-
-
-
 
 
 
