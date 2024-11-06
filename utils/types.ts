@@ -1,20 +1,12 @@
-export type ProductName =
-    | "IntelliJ IDEA Ultimate"
-    | "All Products Pack"
-    | "CLion"
-    | "PyCharm Professional"
-    | "DataGrip";
-
-// DataSpell
-// RubyMine
-// GoLand
-
 export enum PRODUCT_NAMES {
     IDEA = "IntelliJ IDEA Ultimate",
     CLION = "CLion",
     PYCHARM = "PyCharm Professional",
-    DATAGRIP = "DataGrip"
+    DATAGRIP = "DataGrip",
+    ALL = "All Products Pack",
 }
+
+export type CardName = `${PRODUCT_NAMES}`;
 
 export type TabName =
     | "For Organizations"

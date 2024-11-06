@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { BuyPage } from "../pages/BuyPage";
-import { ProductName, SubscriptionType, PRODUCT_NAMES, LinkName } from "../utils/types";
+import { CardName, SubscriptionType, PRODUCT_NAMES, LinkName } from "../utils/types";
 import { ProductCard } from "../components/ProductCard";
 
 const PRODUCT_NAME = process.env.PRODUCT_NAME;
 
-const productCardName: ProductName = PRODUCT_NAMES[PRODUCT_NAME];
-const allProductsCardName: ProductName = 'All Products Pack';
+const productCardName: CardName = PRODUCT_NAMES[PRODUCT_NAME];
+const allProductsCardName: CardName = 'All Products Pack';
 
 const pageUrl = `https://www.jetbrains.com/${PRODUCT_NAME.toLowerCase()}/buy/`
 
