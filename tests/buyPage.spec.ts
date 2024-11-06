@@ -1,12 +1,14 @@
 import { test, expect } from '@playwright/test';
 import { BuyPage } from "../pages/BuyPage";
-import { ProductName, SubscriptionType, PRODUCT_NAMES, LINKS, LinkName } from "../utils/types";
+import { ProductName, SubscriptionType, PRODUCT_NAMES, LinkName } from "../utils/types";
 import { ProductCard } from "../components/ProductCard";
 
-const productName = PRODUCT_NAMES[process.env.PRODUCT_NAME];
-const pageUrl = LINKS[process.env.PRODUCT_NAME];
+const PRODUCT_NAME = process.env.PRODUCT_NAME;
 
+const productCardName: ProductName = PRODUCT_NAMES[PRODUCT_NAME];
 const allProductsCardName: ProductName = 'All Products Pack';
+
+const pageUrl = `https://www.jetbrains.com/${PRODUCT_NAME.toLowerCase()}/buy/`
 
 let buyPage: BuyPage;
 let productCard: ProductCard;
@@ -39,7 +41,7 @@ test.beforeEach(async ({ page, context }) => {
 
 test.describe(`Navigation tests`, () => {
 
-  [productName, allProductsCardName].forEach((cardName) => {
+  [productCardName, allProductsCardName].forEach((cardName) => {
 
     test(`Click on buy button: ${cardName}`, async ({ page }) => {
       const urlRegex = /.*www\.jetbrains\.com\/shop\/customer.*/;
@@ -111,11 +113,11 @@ test.describe(`Screenshot tests`, () => {
   ];
 
   subscriptionTypes.forEach(({ interval, tabName }) => {
-    test(`${productName} - ${tabName} (${interval})`, async () => {
+    test(`${productCardName} - ${tabName} (${interval})`, async () => {
       await buyPage.clickTabByName(tabName);
       await buyPage.clickIntervalByName(interval);
 
-      const snapshotPath = ['cards', productName, `${productName}_${tabName}_${interval}.png`];
+      const snapshotPath = ['cards', productCardName, `${productCardName}_${tabName}_${interval}.png`];
       await expect(productCard.self).toHaveScreenshot(snapshotPath);
     });
 
@@ -127,12 +129,12 @@ test.describe(`Screenshot tests`, () => {
       await expect(allProductsCard.self).toHaveScreenshot(snapshotPath,{ mask: [allProductsCard.buyButton] });
     });
 
-    test(`Supercharge - ${productName} - ${tabName} (${interval})`, async () => {
+    test(`Supercharge - ${productCardName} - ${tabName} (${interval})`, async () => {
       await buyPage.clickTabByName(tabName);
       await buyPage.clickIntervalByName(interval);
       await productCard.clickCheckbox();
 
-      const snapshotPath = ['cards', productName, 'Supercharge',`${productName}_${tabName}_${interval}.png`];
+      const snapshotPath = ['cards', productCardName, 'Supercharge',`${productCardName}_${tabName}_${interval}.png`];
       await expect(productCard.self).toHaveScreenshot(snapshotPath);
     });
 
@@ -164,7 +166,7 @@ test.describe(`Currency tests`, () => {
 
       await page.goto(pageUrl);
 
-      const snapshotPath = ['cards', productName, 'Currencies', `${productName}_${countryCode}.png`];
+      const snapshotPath = ['cards', productCardName, 'Currencies', `${productCardName}_${countryCode}.png`];
       await expect(productCard.self).toHaveScreenshot(snapshotPath);
     })
 

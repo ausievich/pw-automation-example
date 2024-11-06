@@ -9,6 +9,13 @@ export type ProductName =
 // RubyMine
 // GoLand
 
+export enum PRODUCT_NAMES {
+    IDEA = "IntelliJ IDEA Ultimate",
+    CLION = "CLion",
+    PYCHARM = "PyCharm Professional",
+    DATAGRIP = "DataGrip"
+}
+
 export type TabName =
     | "For Organizations"
     | "For Individual Use"
@@ -25,20 +32,6 @@ export type LinkName =
 export interface SubscriptionType {
     interval: Interval,
     tabName: TabName
-}
-
-export enum LINKS {
-    IDEA = "https://www.jetbrains.com/idea/buy/",
-    CLION = "https://www.jetbrains.com/clion/buy/",
-    PYCHARM = "https://www.jetbrains.com/pycharm/buy/",
-    DATAGRIP = "https://www.jetbrains.com/datagrip/buy/"
-}
-
-export enum PRODUCT_NAMES {
-    IDEA = "IntelliJ IDEA Ultimate",
-    CLION = "CLion",
-    PYCHARM = "PyCharm Professional",
-    DATAGRIP = "DataGrip"
 }
 
 
