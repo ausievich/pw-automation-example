@@ -15,8 +15,4 @@ export class PricesBlock {
         this.productPrice = page.locator(`${baseLocator}//div[@data-test="product-price"]`);
     }
 
-    async getProductPriceValue() {
-        return await this.productPrice.textContent();
-    }
-
 }

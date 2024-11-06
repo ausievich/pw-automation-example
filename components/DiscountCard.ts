@@ -11,8 +11,4 @@ export class DiscountCard {
         this.learnMoreLink = page.locator(`${baseLocator}//a`)
     }
 
-    async clickLearnMoreLink(){
-        await this.learnMoreLink.click()
-    }
-
 }

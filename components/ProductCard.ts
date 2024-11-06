@@ -27,8 +27,8 @@ export class ProductCard {
 
         this.pricesBlock = new PricesBlock(page, baseLocator);
 
-        this.getQuoteLink = this.page.locator(`${baseLocator}//a[contains(@href, 'shop/quote')]`);
-        this.learnMoreLink = this.page.locator(`${baseLocator}//a[contains(@href, 'all')]`)
+        this.getQuoteLink = page.locator(`${baseLocator}//a[contains(@href, 'shop/quote')]`);
+        this.learnMoreLink = page.locator(`${baseLocator}//a[contains(@href, 'all')]`)
 
     }
 

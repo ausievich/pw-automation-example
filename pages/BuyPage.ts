@@ -29,9 +29,5 @@ export class BuyPage {
         return new ProductCard(this.page, name);
     }
 
-    async getDiscountCardByName(name: string) {
-        return new DiscountCard(this.page, name);
-    }
-
 }
 
