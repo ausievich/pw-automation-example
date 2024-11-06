@@ -1,7 +1,6 @@
 import {Page, Locator} from "@playwright/test";
 import {ProductCard} from "../components/ProductCard";
-import {DiscountCard} from "../components/DiscountCard";
-import { TabName, Interval, ProductName, PRODUCT_NAMES } from "../utils/types";
+import { TabName, Interval, CardName, PRODUCT_NAMES } from "../utils/types";
 
 export class BuyPage {
     readonly page: Page;
@@ -25,12 +24,8 @@ export class BuyPage {
         await this.page.locator(`//div[@class='wt-css-content-switcher__block']//*[@data-test="adaptive-switcher__switcher"]//*[contains(text(), '${name}')]`).click()
     }
 
-    async getCardByName(name: ProductName) {
+    async getCardByName(name: CardName) {
         return new ProductCard(this.page, name);
-    }
-
-    async getDiscountCardByName(name: string) {
-        return new DiscountCard(this.page, name);
     }
 
 }

@@ -1,6 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 import { PricesBlock } from "./PricesBlock"
-import { ProductName, LinkName } from "../utils/types";
+import { CardName, LinkName } from "../utils/types";
 
 export class ProductCard {
     readonly page: Page;
@@ -13,7 +13,7 @@ export class ProductCard {
     readonly getQuoteLink: Locator;
     readonly learnMoreLink: Locator;
 
-    constructor(page: Page, cardName: ProductName) {
+    constructor(page: Page, cardName: CardName) {
         const baseLocator = `//div[@class="wt-css-content-switcher__block"]//h3[contains(text(), "${cardName}")]/ancestor::div[contains(@data-test, 'product-card')]`;
 
         this.page = page;
@@ -27,8 +27,8 @@ export class ProductCard {
 
         this.pricesBlock = new PricesBlock(page, baseLocator);
 
-        this.getQuoteLink = this.page.locator(`${baseLocator}//a[contains(@href, 'shop/quote')]`);
-        this.learnMoreLink = this.page.locator(`${baseLocator}//a[contains(@href, 'all')]`)
+        this.getQuoteLink = page.locator(`${baseLocator}//a[contains(@href, 'shop/quote')]`);
+        this.learnMoreLink = page.locator(`${baseLocator}//a[contains(@href, 'all')]`)
 
     }
 

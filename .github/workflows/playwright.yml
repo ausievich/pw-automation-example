@@ -31,7 +31,7 @@ jobs:
       options: --user 1001
     strategy:
       matrix:
-        test_name: [idea, clion, pycharm]
+        test_name: [idea, clion, pycharm, datagrip]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

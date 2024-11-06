@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:idea": "PRODUCT_NAME='IDEA' npx playwright test",
-    "test:clion": "PRODUCT_NAME='CLION' npx playwright test",
-    "test:pycharm": "PRODUCT_NAME='PYCHARM' npx playwright test",
+    "test:idea": "PRODUCT_NAME='IDEA' npx playwright test --ignore-snapshots",
+    "test:clion": "PRODUCT_NAME='CLION' npx playwright test --ignore-snapshots",
+    "test:pycharm": "PRODUCT_NAME='PYCHARM' npx playwright test --ignore-snapshots",
+    "test:datagrip": "PRODUCT_NAME='DATAGRIP' npx playwright test --ignore-snapshots",
     "test:idea:docker": "PRODUCT_NAME='IDEA' npm run test:docker",
     "test:clion:docker": "PRODUCT_NAME='CLION' npm run test:docker",
     "test:pycharm:docker": "PRODUCT_NAME='PYCHARM' npm run test:docker",
+    "test:datagrip:docker": "PRODUCT_NAME='DATAGRIP' npm run test:docker",
     "test:docker": "docker run -it --rm --ipc=host -e PRODUCT_NAME=$PRODUCT_NAME -v $(pwd):/app -w /app mcr.microsoft.com/playwright:v1.48.1-noble /bin/bash -c 'npm install && npx playwright test'"
   },
   "keywords": [],

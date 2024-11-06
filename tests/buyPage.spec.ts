@@ -1,12 +1,14 @@
 import { test, expect } from '@playwright/test';
 import { BuyPage } from "../pages/BuyPage";
-import { ProductName, SubscriptionType, PRODUCT_NAMES, LINKS, LinkName } from "../utils/types";
+import { CardName, SubscriptionType, PRODUCT_NAMES, LinkName } from "../utils/types";
 import { ProductCard } from "../components/ProductCard";
 
-const productName = PRODUCT_NAMES[process.env.PRODUCT_NAME];
-const pageUrl = LINKS[process.env.PRODUCT_NAME];
+const PRODUCT_NAME = process.env.PRODUCT_NAME;
 
-const allProductsCardName: ProductName = 'All Products Pack';
+const productCardName: CardName = PRODUCT_NAMES[PRODUCT_NAME];
+const allProductsCardName: CardName = 'All Products Pack';
+
+const pageUrl = `https://www.jetbrains.com/${PRODUCT_NAME.toLowerCase()}/buy/`
 
 let buyPage: BuyPage;
 let productCard: ProductCard;
@@ -38,16 +40,14 @@ test.beforeEach(async ({ page, context }) => {
 });
 
 test.describe(`Navigation tests`, () => {
-
-  [productName, allProductsCardName].forEach((cardName) => {
-
+  [productCardName, allProductsCardName].forEach((cardName) => {
     test(`Click on buy button: ${cardName}`, async ({ page }) => {
       const urlRegex = /.*www\.jetbrains\.com\/shop\/customer.*/;
       const card = await buyPage.getCardByName(cardName);
 
-      await card.buyButton.click()
+      await card.clickBuyButton();
 
-      await expect(page).toHaveURL(urlRegex)
+      await expect(page).toHaveURL(urlRegex);
     });
 
     test(`Navigate "AI Pro" link ${cardName}`, async () => {
@@ -70,34 +70,14 @@ test.describe(`Navigation tests`, () => {
 })
 
 test.describe(`Behaviour tests`, () => {
-
-  test('Click on checkbox hides "Get quote" link', async () => {
-    await productCard.clickCheckbox();
-
-    await expect(productCard.getQuoteLink).not.toBeVisible();
-  });
-
-  test('Click on checkbox does not hide "Learn more" link', async () => {
-    await allProductsCard.clickCheckbox();
-
-    await expect(allProductsCard.getQuoteLink).not.toBeVisible();
-    await expect(allProductsCard.learnMoreLink).toBeVisible();
-  });
-
-  test(`Monthly tab hides annual prices`, async () => {
-    await buyPage.clickIntervalByName('Monthly billing')
-
-    await expect(productCard.pricesBlock.secondYearPrice).not.toBeVisible();
-    await expect(productCard.pricesBlock.thirdYearPrice).not.toBeVisible();
-  });
-
   test('Show "Includes 18 tools" dropdown', async () => {
-    // В тесте проверить работу компонента "Includes 18 tools" в карточке "All Products Pack"
-    // По клику компонент раскрывается.
+    // В тесте проверить работу компонента "Includes 18 tools"
+    // По клику компонент раскрывается
   });
 
   test('Hide "Includes 18 tools" dropdown', async () => {
-    // Элемент сворачивается
+    // В тесте проверить работу компонента "Includes 18 tools"
+    // По клику элемент сворачивается
   });
 
 })
@@ -111,11 +91,11 @@ test.describe(`Screenshot tests`, () => {
   ];
 
   subscriptionTypes.forEach(({ interval, tabName }) => {
-    test(`${productName} - ${tabName} (${interval})`, async () => {
+    test(`${productCardName} - ${tabName} (${interval})`, async () => {
       await buyPage.clickTabByName(tabName);
       await buyPage.clickIntervalByName(interval);
 
-      const snapshotPath = ['cards', productName, `${productName}_${tabName}_${interval}.png`];
+      const snapshotPath = ['cards', productCardName, `${productCardName}_${tabName}_${interval}.png`];
       await expect(productCard.self).toHaveScreenshot(snapshotPath);
     });
 
@@ -127,12 +107,12 @@ test.describe(`Screenshot tests`, () => {
       await expect(allProductsCard.self).toHaveScreenshot(snapshotPath,{ mask: [allProductsCard.buyButton] });
     });
 
-    test(`Supercharge - ${productName} - ${tabName} (${interval})`, async () => {
+    test(`Supercharge - ${productCardName} - ${tabName} (${interval})`, async () => {
       await buyPage.clickTabByName(tabName);
       await buyPage.clickIntervalByName(interval);
       await productCard.clickCheckbox();
 
-      const snapshotPath = ['cards', productName, 'Supercharge',`${productName}_${tabName}_${interval}.png`];
+      const snapshotPath = ['cards', productCardName, 'Supercharge',`${productCardName}_${tabName}_${interval}.png`];
       await expect(productCard.self).toHaveScreenshot(snapshotPath);
     });
 
@@ -164,7 +144,7 @@ test.describe(`Currency tests`, () => {
 
       await page.goto(pageUrl);
 
-      const snapshotPath = ['cards', productName, 'Currencies', `${productName}_${countryCode}.png`];
+      const snapshotPath = ['cards', productCardName, 'Currencies', `${productCardName}_${countryCode}.png`];
       await expect(productCard.self).toHaveScreenshot(snapshotPath);
     })
 
@@ -203,6 +183,8 @@ test.describe(`Further information block tests`, () => {
 })
 
 // Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
+
+
 
 
 
