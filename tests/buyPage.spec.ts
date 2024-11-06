@@ -6,7 +6,7 @@ import { ProductCard } from "../components/ProductCard";
 const PRODUCT_NAME = process.env.PRODUCT_NAME;
 
 const productCardName: CardName = PRODUCT_NAMES[PRODUCT_NAME];
-const allProductsCardName: CardName = 'All Products Pack';
+const allProductsCardName: CardName = PRODUCT_NAMES.ALL;
 
 const pageUrl = `https://www.jetbrains.com/${PRODUCT_NAME.toLowerCase()}/buy/`
 
