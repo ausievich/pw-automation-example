@@ -1,6 +1,5 @@
 import {Page, Locator} from "@playwright/test";
 import {ProductCard} from "../components/ProductCard";
-import {DiscountCard} from "../components/DiscountCard";
 import { TabName, Interval, ProductName, PRODUCT_NAMES } from "../utils/types";
 
 export class BuyPage {
