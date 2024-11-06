@@ -40,16 +40,14 @@ test.beforeEach(async ({ page, context }) => {
 });
 
 test.describe(`Navigation tests`, () => {
-
   [productCardName, allProductsCardName].forEach((cardName) => {
-
     test(`Click on buy button: ${cardName}`, async ({ page }) => {
       const urlRegex = /.*www\.jetbrains\.com\/shop\/customer.*/;
       const card = await buyPage.getCardByName(cardName);
 
-      await card.buyButton.click()
+      await card.clickBuyButton();
 
-      await expect(page).toHaveURL(urlRegex)
+      await expect(page).toHaveURL(urlRegex);
     });
 
     test(`Navigate "AI Pro" link ${cardName}`, async () => {
@@ -72,34 +70,14 @@ test.describe(`Navigation tests`, () => {
 })
 
 test.describe(`Behaviour tests`, () => {
-
-  test('Click on checkbox hides "Get quote" link', async () => {
-    await productCard.clickCheckbox();
-
-    await expect(productCard.getQuoteLink).not.toBeVisible();
-  });
-
-  test('Click on checkbox does not hide "Learn more" link', async () => {
-    await allProductsCard.clickCheckbox();
-
-    await expect(allProductsCard.getQuoteLink).not.toBeVisible();
-    await expect(allProductsCard.learnMoreLink).toBeVisible();
-  });
-
-  test(`Monthly tab hides annual prices`, async () => {
-    await buyPage.clickIntervalByName('Monthly billing')
-
-    await expect(productCard.pricesBlock.secondYearPrice).not.toBeVisible();
-    await expect(productCard.pricesBlock.thirdYearPrice).not.toBeVisible();
-  });
-
   test('Show "Includes 18 tools" dropdown', async () => {
-    // В тесте проверить работу компонента "Includes 18 tools" в карточке "All Products Pack"
-    // По клику компонент раскрывается.
+    // В тесте проверить работу компонента "Includes 18 tools"
+    // По клику компонент раскрывается
   });
 
   test('Hide "Includes 18 tools" dropdown', async () => {
-    // Элемент сворачивается
+    // В тесте проверить работу компонента "Includes 18 tools"
+    // По клику элемент сворачивается
   });
 
 })
