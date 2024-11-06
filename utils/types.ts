@@ -3,6 +3,9 @@ export enum PRODUCT_NAMES {
     CLION = "CLion",
     PYCHARM = "PyCharm Professional",
     DATAGRIP = "DataGrip",
+    DATASPELL = "DataSpell",
+    RUBY = "RubyMine",
+    GO = "GoLand",
     ALL = "All Products Pack",
 }
 
