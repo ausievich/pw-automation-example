@@ -74,6 +74,14 @@ test.describe(`Navigation tests`, () => {
     await expect(page).toHaveURL(urlRegex)
   });
 
+  test(`Navigate "VAT ID" link`, async () => {
+    // Проверим переход по ссылке "VAT ID"
+  });
+
+  test(`Navigate "Perpetual license" link`, async () => {
+    // Проверим переход по ссылке "Perpetual license"
+  });
+
 })
 
 test.describe(`Behaviour tests`, () => {
