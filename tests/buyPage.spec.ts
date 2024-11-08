@@ -138,41 +138,36 @@ test.describe(`Screenshot tests`, () => {
 test.describe(`Currency tests`, () => {
   const countryCodes = ['AM', 'DE', 'GB', 'CN', 'CZ', 'JP'];
 
+  test.beforeEach(async ({ page, context }, testInfo) => {
+    // Gets country code from the test name
+    const countryCode = testInfo.title.split(': ')[1];
+
+    await context.addCookies([
+      {
+        name: 'ncountryCodeCookie',
+        value: countryCode,
+        domain: 'www.jetbrains.com',
+        path: '/',
+      },
+    ]);
+
+    await page.goto(pageUrl);
+  });
+
   countryCodes.forEach((countryCode) => {
-    test(`Product Card currency: ${countryCode}`, async ({ page, context }) => {
-      await context.addCookies([
-          {
-          name: 'ncountryCodeCookie',
-          value: countryCode,
-          domain: 'www.jetbrains.com',
-          path: '/',
-        },
-      ]);
-
-      await page.goto(pageUrl);
-
+    test(`Product Card currency: ${countryCode}`, async () => {
       const snapshotPath = ['cards', productCardName, 'Currencies', `${productCardName}_${countryCode}.png`];
+
       await expect(productCard.self).toHaveScreenshot(snapshotPath);
-    })
+    });
 
-    test(`All Products Card currency: ${countryCode}`, async ({ page, context }) => {
-      await context.addCookies([
-        {
-          name: 'ncountryCodeCookie',
-          value: countryCode,
-          domain: 'www.jetbrains.com',
-          path: '/',
-        },
-      ]);
-
-      await page.goto(pageUrl);
-
+    test(`All Products Card currency: ${countryCode}`, async () => {
       const snapshotPath = ['cards', allProductsCardName, 'Currencies', `${allProductsCardName}_${countryCode}.png`];
-      await expect(allProductsCard.self).toHaveScreenshot(snapshotPath, { mask: [allProductsCard.buyButton] });
-    })
 
-  })
-})
+      await expect(allProductsCard.self).toHaveScreenshot(snapshotPath, { mask: [allProductsCard.buyButton] });
+    });
+  });
+});
 
 test.describe(`Special categories tab tests`, () => {
   // Сделать один общий кадр этого раздела
@@ -190,6 +185,7 @@ test.describe(`Further information block tests`, () => {
 })
 
 // Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
+
 
 
 
