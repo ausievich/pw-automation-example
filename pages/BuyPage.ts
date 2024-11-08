@@ -1,19 +1,15 @@
 import {Page, Locator} from "@playwright/test";
 import {ProductCard} from "../components/ProductCard";
-import { TabName, Interval, CardName, PRODUCT_NAMES } from "../utils/types";
+import { TabName, Interval, CardName } from "../utils/types";
 
 export class BuyPage {
     readonly page: Page;
     readonly heading: Locator;
-    readonly productCard: ProductCard;
-    readonly allProductsPackCard: ProductCard;
 
     constructor(page: Page) {
         this.page = page;
         this.heading = page.locator(`//h1`);
 
-        this.productCard = new ProductCard(page, PRODUCT_NAMES[process.env.PRODUCT_NAME]);
-        this.allProductsPackCard = new ProductCard(page, 'All Products Pack')
     }
 
     async clickTabByName(name: TabName) {
@@ -25,7 +21,9 @@ export class BuyPage {
     }
 
     async getCardByName(name: CardName) {
-        return new ProductCard(this.page, name);
+        const cardLocator = this.page.locator(`//div[@class="wt-css-content-switcher__block"]//h3[contains(text(), "${name}")]/ancestor::div[contains(@data-test, 'product-card')]`);
+
+        return new ProductCard(cardLocator);
     }
 
 }
