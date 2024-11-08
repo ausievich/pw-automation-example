@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { BuyPage } from "../pages/BuyPage";
-import { CardName, SubscriptionType, PRODUCT_NAMES, LinkName } from "../utils/types";
+import { CardName, SubscriptionType, PRODUCT_NAMES } from "../utils/types";
 import { ProductCard } from "../components/ProductCard";
 
 const PRODUCT_NAME = process.env.PRODUCT_NAME;
@@ -34,8 +34,8 @@ test.beforeEach(async ({ page, context }) => {
   await page.goto(pageUrl);
 
   buyPage = new BuyPage(page);
-  productCard = buyPage.productCard;
-  allProductsCard = buyPage.allProductsPackCard;
+  productCard = await buyPage.getCardByName(productCardName);
+  allProductsCard = await buyPage.getCardByName(allProductsCardName);
 
 });
 
@@ -50,21 +50,28 @@ test.describe(`Navigation tests`, () => {
       await expect(page).toHaveURL(urlRegex);
     });
 
+    test(`Click "Get quote" link: ${cardName}`, async ({ page }) => {
+      const urlRegex = /.*www\.jetbrains\.com\/shop\/customer.*/;
+      const card = await buyPage.getCardByName(cardName);
+
+      await card.clickLinkByName('Get quote');
+
+      await expect(page).toHaveURL(urlRegex)
+    });
+
     test(`Navigate "AI Pro" link ${cardName}`, async () => {
       // Проверим переход по ссылке "JetBrains AI Pro"
     });
 
   });
 
-  [
-    { linkName: 'Get quote', urlRegex: /.*jetbrains\.com\/shop\/customer.*/ },
-    { linkName: 'Learn more', urlRegex: /.*jetbrains\.com\/all.*/ },
-  ].forEach(({ linkName, urlRegex }: {linkName: LinkName, urlRegex: RegExp}) => {
-    test(`Click link by name: ${linkName}`, async ({ page }) => {
-      await allProductsCard.clickLinkByName(linkName);
+  test(`Click "Learn more" link`, async ({ page }) => {
+    const urlRegex = /.*jetbrains\.com\/all.*/;
+    const card = await buyPage.getCardByName('All Products Pack');
 
-      await expect(page).toHaveURL(urlRegex)
-    });
+    await card.clickLinkByName("Learn more");
+
+    await expect(page).toHaveURL(urlRegex)
   });
 
 })

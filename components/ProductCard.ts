@@ -1,9 +1,8 @@
-import { Page, Locator } from "@playwright/test";
+import { Locator } from "@playwright/test";
 import { PricesBlock } from "./PricesBlock"
-import { CardName, LinkName } from "../utils/types";
+import { LinkName } from "../utils/types";
 
 export class ProductCard {
-    readonly page: Page;
     readonly self: Locator;
     readonly title: Locator;
     readonly buyButton: Locator;
@@ -13,22 +12,20 @@ export class ProductCard {
     readonly getQuoteLink: Locator;
     readonly learnMoreLink: Locator;
 
-    constructor(page: Page, cardName: CardName) {
-        const baseLocator = `//div[@class="wt-css-content-switcher__block"]//h3[contains(text(), "${cardName}")]/ancestor::div[contains(@data-test, 'product-card')]`;
+    constructor(cardLocator: Locator) {
+        //const baseLocator = page.locator(`//div[@class="wt-css-content-switcher__block"]//h3[contains(text(), "${cardName}")]/ancestor::div[contains(@data-test, 'product-card')]`);
 
-        this.page = page;
-        this.self = page.locator(`${baseLocator}`);
-        this.title = page.locator(`${baseLocator}//h3`);
+        this.self = cardLocator;
+        this.title = cardLocator.locator(`//h3`);
 
-        //this.buyButton = page.locator(`${baseLocator}//a[@data-test="product-card-footer-buy-button"]`);
-        this.buyButton = page.locator(`${baseLocator}//*[@data-test="buy-page-buy-action-button" or @data-test="product-card-footer-buy-button"]`);
-        this.priceTag = page.locator(`${baseLocator}//div[@data-test="product-price"]`);
-        this.checkbox = page.locator(`${baseLocator}//span[@data-test="checkbox"]`)
+        this.buyButton = cardLocator.locator(`//*[@data-test="buy-page-buy-action-button" or @data-test="product-card-footer-buy-button"]`);
+        this.priceTag = cardLocator.locator(`//div[@data-test="product-price"]`);
+        this.checkbox = cardLocator.locator(`//span[@data-test="checkbox"]`)
 
-        this.pricesBlock = new PricesBlock(page, baseLocator);
+        this.pricesBlock = new PricesBlock(cardLocator);
 
-        this.getQuoteLink = page.locator(`${baseLocator}//a[contains(@href, 'shop/quote')]`);
-        this.learnMoreLink = page.locator(`${baseLocator}//a[contains(@href, 'all')]`)
+        this.getQuoteLink = cardLocator.locator(`//a[contains(@href, 'shop/quote')]`);
+        this.learnMoreLink = cardLocator.locator(`//a[contains(@href, 'all')]`)
 
     }
 
