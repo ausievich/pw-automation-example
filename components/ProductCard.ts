@@ -1,8 +1,8 @@
 import { Locator } from "@playwright/test";
 import { LinkName } from "../utils/types";
+import { Element } from "../utils/helpers";
 
-export class ProductCard {
-    readonly self: Locator;
+export class ProductCard extends Element {
     readonly title: Locator;
     readonly buyButton: Locator;
     readonly checkbox: Locator;
@@ -10,7 +10,8 @@ export class ProductCard {
     readonly learnMoreLink: Locator;
 
     constructor(cardLocator: Locator) {
-        this.self = cardLocator;
+        super(cardLocator);
+
         this.title = cardLocator.locator(`//h3`);
 
         this.buyButton = cardLocator.locator(`//*[@data-test="buy-page-buy-action-button" or @data-test="product-card-footer-buy-button"]`);

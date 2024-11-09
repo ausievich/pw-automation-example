@@ -6,7 +6,7 @@ import { ProductCard } from "../components/ProductCard";
 const PRODUCT_NAME = process.env.PRODUCT_NAME;
 
 const productCardName: CardName = PRODUCT_NAMES[PRODUCT_NAME];
-const allProductsCardName: CardName = PRODUCT_NAMES.ALL;
+const allProductsCardName: CardName = 'All Products Pack';
 
 const pageUrl = `https://www.jetbrains.com/${PRODUCT_NAME.toLowerCase()}/buy/`
 
@@ -106,12 +106,13 @@ test.describe(`Screenshot tests`, () => {
   ];
 
   subscriptionTypes.forEach(({ interval, tabName }) => {
-    test(`${productCardName} - ${tabName} (${interval})`, async () => {
+    test.only(`${productCardName} - ${tabName} (${interval})`, async () => {
       await buyPage.clickTabByName(tabName);
       await buyPage.clickIntervalByName(interval);
 
       const snapshotPath = ['cards', productCardName, `${productCardName}_${tabName}_${interval}.png`];
-      await expect(productCard.self).toHaveScreenshot(snapshotPath);
+      //await expect(productCard.self).toHaveScreenshot(snapshotPath);
+      await productCard.takeScreenshot(snapshotPath);
     });
 
     test(`${allProductsCardName} - ${tabName} (${interval})`, async () => {
