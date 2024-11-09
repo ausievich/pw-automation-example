@@ -12,6 +12,7 @@ export class Element {
             ...options,
         });
 
+        // Additional logic if required
     }
 
 }
