@@ -1,6 +1,6 @@
 import { Locator } from "@playwright/test";
 import { LinkName } from "../utils/types";
-import { Element } from "../utils/helpers";
+import { Element } from "../utils/element";
 
 export class ProductCard extends Element {
     readonly title: Locator;

@@ -106,12 +106,12 @@ test.describe(`Screenshot tests`, () => {
   ];
 
   subscriptionTypes.forEach(({ interval, tabName }) => {
-    test.only(`${productCardName} - ${tabName} (${interval})`, async () => {
+    test(`${productCardName} - ${tabName} (${interval})`, async () => {
       await buyPage.clickTabByName(tabName);
       await buyPage.clickIntervalByName(interval);
 
       const snapshotPath = ['cards', productCardName, `${productCardName}_${tabName}_${interval}.png`];
-      //await expect(productCard.self).toHaveScreenshot(snapshotPath);
+
       await productCard.takeScreenshot(snapshotPath);
     });
 
@@ -120,7 +120,8 @@ test.describe(`Screenshot tests`, () => {
       await buyPage.clickIntervalByName(interval);
 
       const snapshotPath = ['cards', allProductsCardName, `${allProductsCardName}_${tabName}_${interval}.png`];
-      await expect(allProductsCard.self).toHaveScreenshot(snapshotPath,{ mask: [allProductsCard.buyButton] });
+
+      await allProductsCard.takeScreenshot(snapshotPath, { mask: [allProductsCard.buyButton] });
     });
 
     test(`Supercharge - ${productCardName} - ${tabName} (${interval})`, async () => {
@@ -129,7 +130,8 @@ test.describe(`Screenshot tests`, () => {
       await productCard.clickCheckbox();
 
       const snapshotPath = ['cards', productCardName, 'Supercharge',`${productCardName}_${tabName}_${interval}.png`];
-      await expect(productCard.self).toHaveScreenshot(snapshotPath);
+
+      await productCard.takeScreenshot(snapshotPath);
     });
 
     test(`Supercharge - ${allProductsCardName} - ${tabName} (${interval})`, async () => {
@@ -138,7 +140,7 @@ test.describe(`Screenshot tests`, () => {
       await allProductsCard.clickCheckbox();
 
       const snapshotPath = ['cards', allProductsCardName, 'Supercharge', `${allProductsCardName}_${tabName}_${interval}.png`];
-      await expect(allProductsCard.self).toHaveScreenshot(snapshotPath,{ mask: [allProductsCard.buyButton, allProductsCard.checkbox] });
+      await allProductsCard.takeScreenshot(snapshotPath,{ mask: [allProductsCard.buyButton, allProductsCard.checkbox] });
     });
 
   });
@@ -167,13 +169,13 @@ test.describe(`Currency tests`, () => {
     test(`Product Card currency: ${countryCode}`, async () => {
       const snapshotPath = ['cards', productCardName, 'Currencies', `${productCardName}_${countryCode}.png`];
 
-      await expect(productCard.self).toHaveScreenshot(snapshotPath);
+      await productCard.takeScreenshot(snapshotPath);
     });
 
     test(`All Products Card currency: ${countryCode}`, async () => {
       const snapshotPath = ['cards', allProductsCardName, 'Currencies', `${allProductsCardName}_${countryCode}.png`];
 
-      await expect(allProductsCard.self).toHaveScreenshot(snapshotPath, { mask: [allProductsCard.buyButton] });
+      await allProductsCard.takeScreenshot(snapshotPath, { mask: [allProductsCard.buyButton] });
     });
   });
 });
@@ -197,7 +199,6 @@ test.describe(`Further information block tests`, () => {
 
 // Можно ли добавить фикстуры?
 // Посмотреть, что еще можно сделать с конфигом (возможно передавать productName оттуда, а не из ci)
-// Можно ли избавиться от self и сделать это как-то изящнее?
 // Посмотреть кейсы с мобильными устройствами и другими браузерами
 
 
