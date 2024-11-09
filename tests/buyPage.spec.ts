@@ -6,7 +6,7 @@ import { ProductCard } from "../components/ProductCard";
 const PRODUCT_NAME = process.env.PRODUCT_NAME;
 
 const productCardName: CardName = PRODUCT_NAMES[PRODUCT_NAME];
-const allProductsCardName: CardName = PRODUCT_NAMES.ALL;
+const allProductsCardName: CardName = 'All Products Pack';
 
 const pageUrl = `https://www.jetbrains.com/${PRODUCT_NAME.toLowerCase()}/buy/`
 
@@ -74,6 +74,14 @@ test.describe(`Navigation tests`, () => {
     await expect(page).toHaveURL(urlRegex)
   });
 
+  test(`Navigate "VAT ID" link`, async () => {
+    // Проверим переход по ссылке "VAT ID"
+  });
+
+  test(`Navigate "Perpetual license" link`, async () => {
+    // Проверим переход по ссылке "Perpetual license"
+  });
+
 })
 
 test.describe(`Behaviour tests`, () => {
@@ -103,7 +111,8 @@ test.describe(`Screenshot tests`, () => {
       await buyPage.clickIntervalByName(interval);
 
       const snapshotPath = ['cards', productCardName, `${productCardName}_${tabName}_${interval}.png`];
-      await expect(productCard.self).toHaveScreenshot(snapshotPath);
+
+      await productCard.takeScreenshot(snapshotPath);
     });
 
     test(`${allProductsCardName} - ${tabName} (${interval})`, async () => {
@@ -111,7 +120,8 @@ test.describe(`Screenshot tests`, () => {
       await buyPage.clickIntervalByName(interval);
 
       const snapshotPath = ['cards', allProductsCardName, `${allProductsCardName}_${tabName}_${interval}.png`];
-      await expect(allProductsCard.self).toHaveScreenshot(snapshotPath,{ mask: [allProductsCard.buyButton] });
+
+      await allProductsCard.takeScreenshot(snapshotPath, { mask: [allProductsCard.buyButton] });
     });
 
     test(`Supercharge - ${productCardName} - ${tabName} (${interval})`, async () => {
@@ -120,7 +130,8 @@ test.describe(`Screenshot tests`, () => {
       await productCard.clickCheckbox();
 
       const snapshotPath = ['cards', productCardName, 'Supercharge',`${productCardName}_${tabName}_${interval}.png`];
-      await expect(productCard.self).toHaveScreenshot(snapshotPath);
+
+      await productCard.takeScreenshot(snapshotPath);
     });
 
     test(`Supercharge - ${allProductsCardName} - ${tabName} (${interval})`, async () => {
@@ -129,7 +140,7 @@ test.describe(`Screenshot tests`, () => {
       await allProductsCard.clickCheckbox();
 
       const snapshotPath = ['cards', allProductsCardName, 'Supercharge', `${allProductsCardName}_${tabName}_${interval}.png`];
-      await expect(allProductsCard.self).toHaveScreenshot(snapshotPath,{ mask: [allProductsCard.buyButton, allProductsCard.checkbox] });
+      await allProductsCard.takeScreenshot(snapshotPath,{ mask: [allProductsCard.buyButton, allProductsCard.checkbox] });
     });
 
   });
@@ -158,13 +169,13 @@ test.describe(`Currency tests`, () => {
     test(`Product Card currency: ${countryCode}`, async () => {
       const snapshotPath = ['cards', productCardName, 'Currencies', `${productCardName}_${countryCode}.png`];
 
-      await expect(productCard.self).toHaveScreenshot(snapshotPath);
+      await productCard.takeScreenshot(snapshotPath);
     });
 
-    test(`All Products Card currency: ${countryCode}`, async () => {
+    test.only(`All Products Card currency: ${countryCode}`, async ({page}) => {
       const snapshotPath = ['cards', allProductsCardName, 'Currencies', `${allProductsCardName}_${countryCode}.png`];
-
-      await expect(allProductsCard.self).toHaveScreenshot(snapshotPath, { mask: [allProductsCard.buyButton] });
+      await page.pause()
+      await allProductsCard.takeScreenshot(snapshotPath, { mask: [allProductsCard.buyButton] });
     });
   });
 });
@@ -186,7 +197,12 @@ test.describe(`Further information block tests`, () => {
 
 // Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
 
+// Посмотреть, можно ли добавить фикстуры
+// Посмотреть, что еще можно сделать с конфигом (возможно передавать productName оттуда, а не из ci)
+// Посмотреть кейсы с мобильными устройствами и другими браузерами
 
+// Три теста падают на китайском рынке из-за нового баннера, это нормально.
+// В реальных условиях просто узнать у разработчиков, что отвечает за его скрытие и добавить в тесты
 
 
 

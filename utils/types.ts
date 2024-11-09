@@ -5,11 +5,10 @@ export enum PRODUCT_NAMES {
     DATAGRIP = "DataGrip",
     DATASPELL = "DataSpell",
     RUBY = "RubyMine",
-    GO = "GoLand",
-    ALL = "All Products Pack",
+    GO = "GoLand"
 }
 
-export type CardName = `${PRODUCT_NAMES}`;
+export type CardName = PRODUCT_NAMES | "All Products Pack";
 
 export type TabName =
     | "For Organizations"
