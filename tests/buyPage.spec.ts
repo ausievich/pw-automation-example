@@ -172,9 +172,9 @@ test.describe(`Currency tests`, () => {
       await productCard.takeScreenshot(snapshotPath);
     });
 
-    test.only(`All Products Card currency: ${countryCode}`, async ({page}) => {
+    test(`All Products Card currency: ${countryCode}`, async () => {
       const snapshotPath = ['cards', allProductsCardName, 'Currencies', `${allProductsCardName}_${countryCode}.png`];
-      await page.pause()
+
       await allProductsCard.takeScreenshot(snapshotPath, { mask: [allProductsCard.buyButton] });
     });
   });
@@ -198,8 +198,9 @@ test.describe(`Further information block tests`, () => {
 // Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
 
 // Посмотреть, можно ли добавить фикстуры
-// Посмотреть, что еще можно сделать с конфигом (возможно передавать productName оттуда, а не из ci)
+// Посмотреть, возможно лучше передавать productName из конфига, а не из ci
 // Посмотреть кейсы с мобильными устройствами и другими браузерами
+// Линтер
 
 // Три теста падают на китайском рынке из-за нового баннера, это нормально.
 // В реальных условиях просто узнать у разработчиков, что отвечает за его скрытие и добавить в тесты
