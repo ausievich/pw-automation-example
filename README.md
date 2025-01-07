@@ -1,6 +1,7 @@
 # JetBrains Buy Page Testing
 
 This project contains tests for the **Buy** pages of JetBrains products using Playwright.
+[![Buy Page Tests](https://github.com/ausievich/testing-task-1/actions/workflows/playwright.yml/badge.svg)](https://github.com/ausievich/testing-task-1/actions/workflows/playwright.yml)
 
 ## Project Structure
 
