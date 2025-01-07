@@ -148,6 +148,7 @@ test.describe(`Screenshot tests`, () => {
 
 test.describe(`Currency tests`, () => {
   const countryCodes = ['AM', 'DE', 'GB', 'CN', 'CZ', 'JP'];
+  //const countryCodes = ['AM'];
 
   test.beforeEach(async ({ page, context }, testInfo) => {
     // Gets country code from the test name
@@ -163,6 +164,8 @@ test.describe(`Currency tests`, () => {
     ]);
 
     await page.goto(pageUrl);
+    await buyPage.clickTabByName('For Individual Use');
+    await buyPage.clickIntervalByName('Yearly billing');
   });
 
   countryCodes.forEach((countryCode) => {
@@ -195,15 +198,7 @@ test.describe(`Further information block tests`, () => {
 
 })
 
-// Только для IDEA нужно проверить блок "Get a 90-day trial for your whole team"
 
-// Фикстуры
-// Линтер
-// Возможно, лучше передавать productName из конфига, а не из ci
-// Кейсы с мобильными устройствами и другими браузерами
-
-// Три теста падают на китайском рынке из-за нового баннера, это нормально.
-// В реальных условиях узнать у разработчиков, что отвечает за его отображение и скрыть в коде тестов
 
 
 
