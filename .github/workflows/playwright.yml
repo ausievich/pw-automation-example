@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Buy Page Tests
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
     branches: [ main, master ]
   schedule:
     - cron: "0 * * * *"
+  workflow_dispatch:
 
 jobs:
   install:
