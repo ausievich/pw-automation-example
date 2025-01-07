@@ -8,7 +8,7 @@ This project contains tests for the **Buy** pages of JetBrains products using Pl
 
 - **`/tests`**: Contains the specification file for the **Buy Page** tests.
 - **`/pages`**: Contains the **Buy Page** class that defines the structure and methods for the pages under test.
-- **`/components`**: Houses classes for individual elements used on the Buy pages, improving readability and maintainability.
+- **`/components`**: Houses classes for individual elements used on the Buy pages.
 - **`/screenshots`**: Contains reference screenshots captured during tests.
 
 ## Key Features
@@ -16,7 +16,7 @@ This project contains tests for the **Buy** pages of JetBrains products using Pl
 - **Page Object Pattern**: Tests are organized using the **Page Object** pattern, which simplifies scaling and extending tests.
 - **Component Classes**: Common page elements are encapsulated in component classes, promoting reusable and clean code.
 - **Screenshot testing**: Screenshot testing is implemented within a Docker container to avoid differences during CI runs.
-- **CI Configuration**: The `playwright.yaml` file uses a matrix approach, running a separate job for each buy page, making it easily scalable.
+- **CI Configuration**: The `playwright.yaml` file uses a matrix approach, running a separate job for each buy page.
 
 
 ## Running the Tests
