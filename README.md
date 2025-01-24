@@ -17,6 +17,7 @@ This project contains tests for the **Buy** pages of JetBrains products using Pl
 - **Component Classes**: Common page elements are encapsulated in component classes, promoting reusable and clean code.
 - **Screenshot testing**: Screenshot testing is implemented within a Docker container to avoid differences during CI runs.
 - **CI Configuration**: The `playwright.yaml` file uses a matrix approach, running a separate job for each buy page.
+- **Scheduled Test Runs**: Tests are executed automatically on CI once a day using a scheduled job configuration, ensuring consistent monitoring of application functionality.
 
 
 ## Running the Tests
@@ -27,15 +28,11 @@ Screenshots are only intended to be captured in Docker or CI environments to avo
 To run tests locally for debugging purposes or to execute them in headed mode, use the following commands:
 ```bash
 npm run test:idea
-npm run test:clion
-npm run test:pycharm
 ```
 
 To capture screenshots, use the following scripts:
 ```bash
 npm run test:idea:docker
-npm run test:clion:docker
-npm run test:pycharm:docker
 ```
 
 ## Notes
