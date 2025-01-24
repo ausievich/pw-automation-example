@@ -60,7 +60,7 @@ test.describe(`Navigation tests`, () => {
     });
 
     test(`Navigate "AI Pro" link ${cardName}`, async () => {
-      // Проверим переход по ссылке "JetBrains AI Pro"
+      // Checks "JetBrains AI Pro" link
     });
 
   });
@@ -75,24 +75,22 @@ test.describe(`Navigation tests`, () => {
   });
 
   test(`Navigate "VAT ID" link`, async () => {
-    // Проверим переход по ссылке "VAT ID"
+    // Checks "VAT ID" link
   });
 
   test(`Navigate "Perpetual license" link`, async () => {
-    // Проверим переход по ссылке "Perpetual license"
+    // Checks "Perpetual license" link
   });
 
 })
 
 test.describe(`Behaviour tests`, () => {
   test('Show "Includes 18 tools" dropdown', async () => {
-    // В тесте проверить работу компонента "Includes 18 tools"
-    // По клику компонент раскрывается
+    // Expands on click
   });
 
   test('Hide "Includes 18 tools" dropdown', async () => {
-    // В тесте проверить работу компонента "Includes 18 tools"
-    // По клику элемент сворачивается
+    // Collapses on close
   });
 
 })
@@ -148,7 +146,6 @@ test.describe(`Screenshot tests`, () => {
 
 test.describe(`Currency tests`, () => {
   const countryCodes = ['AM', 'DE', 'GB', 'CN', 'CZ', 'JP'];
-  //const countryCodes = ['AM'];
 
   test.beforeEach(async ({ page, context }, testInfo) => {
     // Gets country code from the test name
@@ -184,17 +181,12 @@ test.describe(`Currency tests`, () => {
 });
 
 test.describe(`Special categories tab tests`, () => {
-  // Сделать один общий кадр этого раздела
-  // Нужен для него data-test атрибут
-  // Аналогично для второго special-таба (Students, Teachers and Community)
-  // Учесть небольшие отличия idea, clion, pycharm
+  // Planned for future implementation
 
 })
 
 test.describe(`Further information block tests`, () => {
-  // Сделать скриншот блока
-  // Проверить работу ссылок
-  // Проверить работу кнопки "Contact us"
+  // Planned for future implementation
 
 })
 
