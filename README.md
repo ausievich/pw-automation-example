@@ -1,4 +1,4 @@
-# JetBrains Buy Page Testing
+# Playwright Test Automation Project
 
 This project contains tests for the **Buy** pages of JetBrains products using Playwright.
 
