@@ -193,5 +193,3 @@ test.describe(`Further information block tests`, () => {
 
 
 
-
-
