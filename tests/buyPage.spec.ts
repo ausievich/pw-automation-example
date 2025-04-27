@@ -32,15 +32,6 @@ test.describe(`Navigation tests`, () => {
     await expect(premiumPage.header.premiumMenu.locator).toBeVisible();
   });
 
-
-  test.skip(`header premium link menu navigation`, async ({page}) => {
-    const urlRegex = /.family.*/;
-    await premiumPage.header.premiumLink.hover();
-    await premiumPage.header.premiumMenu.clickLinkByName('premium-family');
-
-    await expect(page).toHaveURL(urlRegex);
-  });
-
   const subscriptionPlans: { subscriptionPlan: PremiumPlan; urlRegex: RegExp }[] = [
     { subscriptionPlan: 'premium-family', urlRegex: /.family.*/ },
     { subscriptionPlan: 'premium-duo', urlRegex: /.duo.*/ },
