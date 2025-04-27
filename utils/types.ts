@@ -19,9 +19,11 @@ export type Interval =
     | "Monthly billing"
     | "Yearly billing";
 
-export type LinkName =
-    | "Get quote"
-    | "Learn more";
+export type PremiumPlan =
+    | "premium-individual"
+    | "premium-duo"
+    | "premium-student"
+    | "premium-family"
 
 export interface SubscriptionType {
     interval: Interval,
