@@ -52,13 +52,7 @@ test.describe(`Navigation tests`, () => {
 
 
 test.describe(`Behaviour tests`, () => {
-  test('Show "Includes 18 tools" dropdown', async () => {
-    // Expands on click
-  });
 
-  test('Hide "Includes 18 tools" dropdown', async () => {
-    // Collapses on close
-  });
 
 })
 
@@ -110,52 +104,7 @@ test.describe(`Behaviour tests`, () => {
 //
 //   });
 // })
-//
-// test.describe(`Currency tests`, () => {
-//   const countryCodes = ['AM', 'DE', 'GB', 'CN', 'CZ', 'JP'];
-//
-//   test.beforeEach(async ({ page, context }, testInfo) => {
-//     // Gets country code from the test name
-//     const countryCode = testInfo.title.split(': ')[1];
-//
-//     await context.addCookies([
-//       {
-//         name: 'ncountryCodeCookie',
-//         value: countryCode,
-//         domain: 'www.jetbrains.com',
-//         path: '/',
-//       },
-//     ]);
-//
-//     await page.goto(pageUrl);
-//     await premiumPage.clickTabByName('For Individual Use');
-//     await premiumPage.clickIntervalByName('Yearly billing');
-//   });
-//
-//   countryCodes.forEach((countryCode) => {
-//     test(`Product Card currency: ${countryCode}`, async () => {
-//       const snapshotPath = ['cards', productCardName, 'Currencies', `${productCardName}_${countryCode}.png`];
-//
-//       await productCard.takeScreenshot(snapshotPath);
-//     });
-//
-//     test(`All Products Card currency: ${countryCode}`, async () => {
-//       const snapshotPath = ['cards', allProductsCardName, 'Currencies', `${allProductsCardName}_${countryCode}.png`];
-//
-//       await allProductsCard.takeScreenshot(snapshotPath, { mask: [allProductsCard.buyButton] });
-//     });
-//   });
-// });
 
-test.describe(`Special categories tab tests`, () => {
-  // Planned for future implementation
-
-})
-
-test.describe(`Further information block tests`, () => {
-  // Planned for future implementation
-
-})
 
 
 
