@@ -26,7 +26,7 @@ jobs:
           name: node_modules
           path: node_modules.tar.gz
 
-  buy_page_test:
+  premium_page_test:
     needs: install
     runs-on: ubuntu-latest
     container:
@@ -47,7 +47,7 @@ jobs:
       - name: Extract node_modules
         run: tar -xzf node_modules.tar.gz
       - name: Run tests
-        run: npm run test:${{ matrix.test_name }}
+        run: npm run:tests:docker
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
