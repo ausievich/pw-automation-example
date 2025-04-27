@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { PremiumPage } from "../pages/PremiumPage";
+import {PremiumPlan} from "../utils/types";
 
 const pageUrl = `https://www.spotify.com/am/premium/`;
 let premiumPage: PremiumPage;
@@ -16,29 +17,45 @@ test.describe(`Navigation tests`, () => {
     await premiumPage.header.supportLink.click();
 
     await expect(page).toHaveURL(urlRegex);
-  })
+  });
 
   test(`header download link`, async ({page}) => {
     const urlRegex = /.download.*/;
     await premiumPage.header.downloadLink.click();
 
     await expect(page).toHaveURL(urlRegex);
-  })
+  });
 
   test(`header premium link menu displayed`, async ({page}) => {
     await premiumPage.header.premiumLink.hover();
 
     await expect(premiumPage.header.premiumMenu.locator).toBeVisible();
-  })
+  });
 
-  test(`header premium link menu navigation`, async ({page}) => {
+
+  test.skip(`header premium link menu navigation`, async ({page}) => {
     const urlRegex = /.family.*/;
     await premiumPage.header.premiumLink.hover();
     await premiumPage.header.premiumMenu.clickLinkByName('premium-family');
 
     await expect(page).toHaveURL(urlRegex);
-  })
+  });
 
+  const subscriptionPlans: { subscriptionPlan: PremiumPlan; urlRegex: RegExp }[] = [
+    { subscriptionPlan: 'premium-family', urlRegex: /.family.*/ },
+    { subscriptionPlan: 'premium-duo', urlRegex: /.duo.*/ },
+    { subscriptionPlan: 'premium-student', urlRegex: /.student.*/ },
+    { subscriptionPlan: 'premium-individual', urlRegex: /.individual.*/ },
+  ];
+
+  subscriptionPlans.forEach(({ subscriptionPlan, urlRegex }) => {
+    test(`header premium link menu navigation: ${subscriptionPlan}`, async ({ page }) => {
+      await premiumPage.header.premiumLink.hover();
+      await premiumPage.header.premiumMenu.clickLinkByName(subscriptionPlan);
+
+      await expect(page).toHaveURL(urlRegex);
+    });
+  });
 })
 
 

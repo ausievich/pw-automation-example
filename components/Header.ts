@@ -3,10 +3,10 @@ import { PremiumPlan} from "../utils/types";
 import { Element } from "../utils/element";
 
 export class Header extends Element {
-    readonly premiumMenu: PremiumMenu;
     readonly premiumLink: Locator;
     readonly supportLink: Locator;
     readonly downloadLink: Locator;
+    readonly premiumMenu: PremiumMenu;
 
     constructor(headerLocator: Locator) {
         super(headerLocator);

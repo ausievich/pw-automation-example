@@ -5,12 +5,10 @@ import {Header} from "../components/Header";
 
 export class PremiumPage {
     readonly page: Page;
-    readonly heading: Locator;
     readonly header: Header;
 
     constructor(page: Page) {
         this.page = page;
-        this.heading = page.locator(`//h1`);
         this.header = new Header(this.page.locator('//header'));
     }
 
