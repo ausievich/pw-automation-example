@@ -2,7 +2,7 @@ name: Premium Page Tests
 
 on:
   push:
-    branches: [ '*' ]
+    branches: [ 'main', 'master' ]
   pull_request:
     branches: [ '*' ]
   schedule:
@@ -30,7 +30,7 @@ jobs:
     needs: install
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.48.1-noble
+      image: mcr.microsoft.com/playwright:v1.52.0-noble
       options: --user 1001
     steps:
       - uses: actions/checkout@v4
