@@ -5,7 +5,7 @@ import {PremiumPlan} from "../utils/types";
 const pageUrl = `https://www.spotify.com/am/premium/`;
 let premiumPage: PremiumPage;
 
-test.beforeEach(async ({ page, context }) => {
+test.beforeEach(async ({ page }) => {
   await page.goto(pageUrl);
 
   premiumPage = new PremiumPage(page);
@@ -26,11 +26,21 @@ test.describe(`Navigation tests`, () => {
     await expect(page).toHaveURL(urlRegex);
   });
 
-  test(`header premium link menu displayed`, async ({page}) => {
+  test(`header premium link menu displayed`, async () => {
     await premiumPage.header.premiumLink.hover();
 
     await expect(premiumPage.header.premiumMenu.locator).toBeVisible();
   });
+
+  test(`header premium link menu snapshot`, async () => {
+    const premiumMenu = premiumPage.header.premiumMenu;
+    const snapshotPath = ['header', `PremiumMenu.png`];
+
+    await premiumPage.header.premiumLink.hover();
+
+    await premiumMenu.takeScreenshot(snapshotPath);
+  })
+
 
   const subscriptionPlans: { subscriptionPlan: PremiumPlan; urlRegex: RegExp }[] = [
     { subscriptionPlan: 'premium-family', urlRegex: /.family.*/ },
@@ -67,6 +77,9 @@ test.describe(`Behaviour tests`, () => {
 
 
 })
+
+// Добавить allure
+// Добавить побольше интересных тест-кейсов
 
 
 
