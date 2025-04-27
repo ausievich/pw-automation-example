@@ -21,11 +21,11 @@ export class ProductCard extends Element {
 
     }
 
-    async clickCheckbox() {
-        await this.checkbox.click();
-    }
-
-    async clickBuyButton() {
-        await this.buyButton.click();
-    }
+    // async clickCheckbox() {
+    //     await this.checkbox.click();
+    // }
+    //
+    // async clickBuyButton() {
+    //     await this.buyButton.click();
+    // }
 }

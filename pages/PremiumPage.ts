@@ -1,5 +1,6 @@
 import {Page, Locator} from "@playwright/test";
 import {Header} from "../components/Header";
+import {Section} from "../components/Section";
 
 export class PremiumPage {
     readonly page: Page;
@@ -10,10 +11,10 @@ export class PremiumPage {
         this.header = new Header(this.page.locator('//header'));
     }
 
-    // async getCardByName(name: CardName) {
-    //     const cardLocator = this.page.locator(`//div[@class="wt-css-content-switcher__block"]//h3[contains(text(), "${name}")]/ancestor::div[contains(@data-test, 'product-card')]`);
-    //
-    //     return new ProductCard(cardLocator);
-    // }
+    async getSectionByPosition(position: Number) {
+        const sectionLocator = this.page.locator(`//section[@data-component-position="${position}"]`);
+
+        return new Section(sectionLocator);
+    }
 }
 

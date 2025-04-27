@@ -49,61 +49,24 @@ test.describe(`Navigation tests`, () => {
   });
 })
 
+test.describe(`Screenshot tests`, () => {
+  const sectionPositions: Number[] = [0, 1, 3];
 
+  sectionPositions.forEach((position) => {
+    test(`screenshot section: position ${position}`, async () => {
+      const section = await premiumPage.getSectionByPosition(position);
+      const snapshotPath = ['sections', `Section_${position}.png`];
+
+      await section.takeScreenshot(snapshotPath);
+    });
+
+  });
+})
 
 test.describe(`Behaviour tests`, () => {
 
 
 })
-
-// test.describe(`Screenshot tests`, () => {
-//   const subscriptionTypes: SubscriptionType[] = [
-//     { interval: 'Monthly billing', tabName: 'For Individual Use' },
-//     { interval: 'Monthly billing', tabName: 'For Organizations' },
-//     { interval: 'Yearly billing', tabName: 'For Individual Use' },
-//     { interval: 'Yearly billing', tabName: 'For Organizations' },
-//   ];
-//
-//   subscriptionTypes.forEach(({ interval, tabName }) => {
-//     test(`${productCardName} - ${tabName} (${interval})`, async () => {
-//       await premiumPage.clickTabByName(tabName);
-//       await premiumPage.clickIntervalByName(interval);
-//
-//       const snapshotPath = ['cards', productCardName, `${productCardName}_${tabName}_${interval}.png`];
-//
-//       await productCard.takeScreenshot(snapshotPath);
-//     });
-//
-//     test(`${allProductsCardName} - ${tabName} (${interval})`, async () => {
-//       await premiumPage.clickTabByName(tabName);
-//       await premiumPage.clickIntervalByName(interval);
-//
-//       const snapshotPath = ['cards', allProductsCardName, `${allProductsCardName}_${tabName}_${interval}.png`];
-//
-//       await allProductsCard.takeScreenshot(snapshotPath, { mask: [allProductsCard.buyButton] });
-//     });
-//
-//     test(`Supercharge - ${productCardName} - ${tabName} (${interval})`, async () => {
-//       await premiumPage.clickTabByName(tabName);
-//       await premiumPage.clickIntervalByName(interval);
-//       await productCard.clickCheckbox();
-//
-//       const snapshotPath = ['cards', productCardName, 'Supercharge',`${productCardName}_${tabName}_${interval}.png`];
-//
-//       await productCard.takeScreenshot(snapshotPath);
-//     });
-//
-//     test(`Supercharge - ${allProductsCardName} - ${tabName} (${interval})`, async () => {
-//       await premiumPage.clickTabByName(tabName);
-//       await premiumPage.clickIntervalByName(interval);
-//       await allProductsCard.clickCheckbox();
-//
-//       const snapshotPath = ['cards', allProductsCardName, 'Supercharge', `${allProductsCardName}_${tabName}_${interval}.png`];
-//       await allProductsCard.takeScreenshot(snapshotPath,{ mask: [allProductsCard.buyButton, allProductsCard.checkbox] });
-//     });
-//
-//   });
-// })
 
 
 
