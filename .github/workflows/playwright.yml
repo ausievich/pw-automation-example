@@ -1,10 +1,10 @@
-name: Buy Page Tests
+name: Premium Page Tests
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ '*' ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ '*' ]
   schedule:
     - cron: "0 0 * * *"
   workflow_dispatch:
