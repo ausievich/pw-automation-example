@@ -1,5 +1,4 @@
 import { Locator } from "@playwright/test";
-import { LinkName } from "../utils/types";
 import { Element } from "../utils/element";
 
 export class ProductCard extends Element {
@@ -22,17 +21,11 @@ export class ProductCard extends Element {
 
     }
 
-    async clickCheckbox() {
-        await this.checkbox.click();
-    }
-
-    async clickBuyButton() {
-        await this.buyButton.click();
-    }
-
-    async clickLinkByName(name: LinkName){
-        if (name === 'Get quote') { await this.getQuoteLink.click() }
-        if (name === 'Learn more') { await this.learnMoreLink.click() }
-    }
-
+    // async clickCheckbox() {
+    //     await this.checkbox.click();
+    // }
+    //
+    // async clickBuyButton() {
+    //     await this.buyButton.click();
+    // }
 }

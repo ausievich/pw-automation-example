@@ -4,25 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:idea": "PRODUCT_NAME='IDEA' npx playwright test",
-    "test:clion": "PRODUCT_NAME='CLION' npx playwright test",
-    "test:pycharm": "PRODUCT_NAME='PYCHARM' npx playwright test",
-    "test:datagrip": "PRODUCT_NAME='DATAGRIP' npx playwright test",
-    "test:goland": "PRODUCT_NAME='GO' npx playwright test",
-
-    "test:idea:docker": "PRODUCT_NAME='IDEA' npm run test:docker",
-    "test:clion:docker": "PRODUCT_NAME='CLION' npm run test:docker",
-    "test:pycharm:docker": "PRODUCT_NAME='PYCHARM' npm run test:docker",
-    "test:datagrip:docker": "PRODUCT_NAME='DATAGRIP' npm run test:docker",
-    "test:goland:docker": "PRODUCT_NAME='GO' npm run test:docker",
-
-    "test:docker": "docker run -it --rm --ipc=host -e PRODUCT_NAME=$PRODUCT_NAME -e CI=true -v $(pwd):/app -w /app mcr.microsoft.com/playwright:v1.48.1-noble /bin/bash -c 'npm install && npx playwright test'"
+    "test:local": "npx playwright test",
+    "test:docker": "npm run docker",
+    "docker": "docker run -it --rm --ipc=host -e CI=true -v $(pwd):/app -w /app mcr.microsoft.com/playwright:v1.52.0-noble /bin/bash -c 'npm install && npx playwright test'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.48.2",
+    "@playwright/test": "^1.52.0",
     "@types/node": "^22.8.2"
   }
 }

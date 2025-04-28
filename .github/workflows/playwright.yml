@@ -1,17 +1,16 @@
-name: Buy Page Tests
-
+name: Playwright Tests
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-  schedule:
-    - cron: "0 0 * * *"
-  workflow_dispatch:
-
 jobs:
-  install:
+  playwright:
+    name: 'Playwright Tests'
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.52.0-noble
+      options: --user 1001
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -19,38 +18,5 @@ jobs:
           node-version: lts/*
       - name: Install dependencies
         run: npm ci
-      - name: Save node_modules
-        run: tar -czf node_modules.tar.gz node_modules
-      - uses: actions/upload-artifact@v4
-        with:
-          name: node_modules
-          path: node_modules.tar.gz
-
-  buy_page_test:
-    needs: install
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.48.1-noble
-      options: --user 1001
-    strategy:
-      matrix:
-        test_name: [idea, clion, pycharm, datagrip, goland]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-      - name: Download node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-      - name: Extract node_modules
-        run: tar -xzf node_modules.tar.gz
-      - name: Run tests
-        run: npm run test:${{ matrix.test_name }}
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report-${{ matrix.test_name }}
-          path: playwright-report/
-          retention-days: 30
+      - name: Run your tests
+        run: npx playwright test
