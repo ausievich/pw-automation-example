@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tests:local": "npx playwright test",
-    "tests:docker": "npm run test:docker",
-    "test:docker": "docker run -it --rm --ipc=host -e CI=true -v $(pwd):/app -w /app mcr.microsoft.com/playwright:v1.52.0-noble /bin/bash -c 'npm install && npx playwright test'"
+    "test:local": "npx playwright test",
+    "test:docker": "npm run docker",
+    "docker": "docker run -it --rm --ipc=host -e CI=true -v $(pwd):/app -w /app mcr.microsoft.com/playwright:v1.52.0-noble /bin/bash -c 'npm install && npx playwright test'"
   },
   "keywords": [],
   "author": "",

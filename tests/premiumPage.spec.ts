@@ -12,6 +12,13 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe(`Navigation tests`, () => {
+  test(`header logo link`, async ({ page }) => {
+    const urlRegex = /.open.*/;
+    await premiumPage.header.logo.click();
+
+    await expect(page).toHaveURL(urlRegex);
+  });
+
   test(`header support link`, async ({ page }) => {
     const urlRegex = /.support.*/;
     await premiumPage.header.supportLink.click();
@@ -59,7 +66,7 @@ test.describe(`Navigation tests`, () => {
   });
 })
 
-test.describe(`Screenshot tests`, () => {
+test.describe(`Section snapshot tests`, () => {
   const sectionPositions: Number[] = [0, 1, 3];
 
   sectionPositions.forEach((position) => {

@@ -3,6 +3,7 @@ import { PremiumPlan} from "../utils/types";
 import { Element } from "../utils/element";
 
 export class Header extends Element {
+    readonly logo: Locator;
     readonly premiumLink: Locator;
     readonly supportLink: Locator;
     readonly downloadLink: Locator;
@@ -10,6 +11,8 @@ export class Header extends Element {
 
     constructor(headerLocator: Locator) {
         super(headerLocator);
+
+        this.logo = headerLocator.locator(`//div[contains(@class, 'brand-wrapper')]`);
 
         this.premiumLink = headerLocator.locator(`//li[contains(@class, "premium")]`);
         this.supportLink = headerLocator.locator(`//a[@data-ga-action="help"]`);
