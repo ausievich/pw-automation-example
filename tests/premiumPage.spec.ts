@@ -48,7 +48,6 @@ test.describe(`Navigation tests`, () => {
     await premiumMenu.takeScreenshot(snapshotPath);
   })
 
-
   const subscriptionPlans: { subscriptionPlan: PremiumPlan; urlRegex: RegExp }[] = [
     { subscriptionPlan: 'premium-family', urlRegex: /.family.*/ },
     { subscriptionPlan: 'premium-duo', urlRegex: /.duo.*/ },
@@ -64,6 +63,20 @@ test.describe(`Navigation tests`, () => {
       await expect(page).toHaveURL(urlRegex);
     });
   });
+
+  test(`get started button`, async ({ page }) => {
+    const urlRegex = /.login.*/;
+    await premiumPage.getStartedButton.click();
+
+    await expect(page).toHaveURL(urlRegex);
+  })
+
+  test.only(`view all plans button`, async ({ page }) => {
+    const urlRegex = /.#plans.*/;
+    await premiumPage.viewAllPlansButton.click();
+
+    await expect(page).toHaveURL(urlRegex);
+  })
 })
 
 test.describe(`Section snapshot tests`, () => {

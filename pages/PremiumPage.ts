@@ -5,10 +5,15 @@ import {Section} from "../components/Section";
 export class PremiumPage {
     readonly page: Page;
     readonly header: Header;
+    readonly getStartedButton: Locator;
+    readonly viewAllPlansButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.header = new Header(this.page.locator('//header'));
+
+        this.getStartedButton = this.page.locator(`//span[contains(text(),"Get started")]`)
+        this.viewAllPlansButton = this.page.locator(`//span[contains(text(),"View all plans")]`)
     }
 
     async getSectionByPosition(position: Number) {
@@ -16,5 +21,7 @@ export class PremiumPage {
 
         return new Section(sectionLocator);
     }
+
+
 }
 
