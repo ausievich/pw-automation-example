@@ -15,4 +15,8 @@ export class Element {
         // Additional logic if required
     }
 
+    async click() {
+        await this.locator.click();
+    }
+
 }

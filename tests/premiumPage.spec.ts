@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { PremiumPage } from "../pages/PremiumPage";
-import {PremiumPlan} from "../utils/types";
+import {CardId, PremiumPlan} from "../utils/types";
 
 const pageUrl = `https://www.spotify.com/am/premium/`;
 let premiumPage: PremiumPage;
@@ -48,7 +48,6 @@ test.describe(`Navigation tests`, () => {
     await premiumMenu.takeScreenshot(snapshotPath);
   })
 
-
   const subscriptionPlans: { subscriptionPlan: PremiumPlan; urlRegex: RegExp }[] = [
     { subscriptionPlan: 'premium-family', urlRegex: /.family.*/ },
     { subscriptionPlan: 'premium-duo', urlRegex: /.duo.*/ },
@@ -64,9 +63,23 @@ test.describe(`Navigation tests`, () => {
       await expect(page).toHaveURL(urlRegex);
     });
   });
+
+  test(`get started button`, async ({ page }) => {
+    const urlRegex = /.login.*/;
+    await premiumPage.getStartedButton.click();
+
+    await expect(page).toHaveURL(urlRegex);
+  })
+
+  test(`view all plans button`, async ({ page }) => {
+    const urlRegex = /.#plans.*/;
+    await premiumPage.viewAllPlansButton.click();
+
+    await expect(page).toHaveURL(urlRegex);
+  })
 })
 
-test.describe(`Section snapshot tests`, () => {
+test.describe(`Snapshot tests`, () => {
   const sectionPositions: Number[] = [0, 1, 3];
 
   sectionPositions.forEach((position) => {
@@ -78,15 +91,54 @@ test.describe(`Section snapshot tests`, () => {
     });
 
   });
+
+  const subcriptionTypes: CardId[] = ['plan-premium-individual', 'plan-premium-duo', 'plan-premium-student', 'plan-premium-family'];
+
+  subcriptionTypes.forEach((id) => {
+    test(`subscription card: ${id}`, async () => {
+      const subscriptionCard = await premiumPage.getPremiumCardById(id);
+      const snapshotPath = ['subscriptionCards', `SubscriptionCard_${id}.png`];
+
+      await subscriptionCard.takeScreenshot(snapshotPath);
+    });
+
+  });
+
+
 })
 
 test.describe(`Behaviour tests`, () => {
+  test(`open question`, async ({ page }) => {
+    const q = await premiumPage.getQuestionContainerByText('How much is Spotify Premium in Armenia?')
+
+    await q.questionTitle.click();
+
+    await expect(q.questionContent).toBeVisible();
+  })
+
+  test(`close question`, async ({ page }) => {
+    const q = await premiumPage.getQuestionContainerByText('How does the Spotify Premium trial work?')
+
+    await q.questionTitle.click();
+    await q.questionTitle.click();
+
+    await expect(q.questionContent).not.toBeVisible();
+  })
+
+  test(`show tooltip`, async ({ page }) => {
+    const tooltipTrigger = await premiumPage.getTooltipTriggerByText('Download');
+    await tooltipTrigger.hover();
+
+    await expect(premiumPage.tooltip).toBeVisible();
+  })
 
 
 })
 
-// Добавить allure
-// Добавить побольше интересных тест-кейсов
+// TODO
+// add allure report
+
+
 
 
 
