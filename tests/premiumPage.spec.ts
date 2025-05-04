@@ -111,13 +111,20 @@ test.describe(`Behaviour tests`, () => {
     await expect(q.questionContent).not.toBeVisible();
   })
 
+  test(`show tooltip`, async ({ page }) => {
+    const tooltipTrigger = await premiumPage.getTooltipTriggerByText('Download');
+    await tooltipTrigger.hover();
 
+    await expect(premiumPage.tooltip).toBeVisible();
+  })
 
 
 })
 
-// Добавить allure
-// Добавить побольше интересных тест-кейсов
+// TODO
+// add allure report
+
+
 
 
 

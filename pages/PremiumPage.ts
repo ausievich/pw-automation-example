@@ -8,6 +8,7 @@ export class PremiumPage {
     readonly header: Header;
     readonly getStartedButton: Locator;
     readonly viewAllPlansButton: Locator;
+    readonly tooltip: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -15,6 +16,8 @@ export class PremiumPage {
 
         this.getStartedButton = this.page.locator(`//span[contains(text(),"Get started")]`)
         this.viewAllPlansButton = this.page.locator(`//span[contains(text(),"View all plans")]`)
+
+        this.tooltip = this.page.locator(`//div[contains(@class, 'TooltipWrapper')]`);
     }
 
     async getSectionByPosition(position: Number) {
@@ -28,6 +31,14 @@ export class PremiumPage {
 
         return new QuestionContainer(locator);
     }
+
+    async getTooltipTriggerByText(text: string) {
+        const locator = this.page.locator(`//span[@data-sentry-element="TooltipTrigger" and contains(text(), '${text}')]`);
+
+        return locator;
+    }
+
+
 
 }
 
