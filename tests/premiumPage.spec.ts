@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { PremiumPage } from "../pages/PremiumPage";
 import {CardId, PremiumPlan} from "../utils/types";
-import { Element } from "../utils/element";
 
 const pageUrl = `https://www.spotify.com/am/premium/`;
 let premiumPage: PremiumPage;
