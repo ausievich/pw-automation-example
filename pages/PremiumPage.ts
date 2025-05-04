@@ -2,6 +2,8 @@ import {Page, Locator} from "@playwright/test";
 import {Header} from "../components/Header";
 import { Section} from "../components/Section";
 import {QuestionContainer} from "../components/QuestionContainer";
+import {CardId} from "../utils/types";
+import { Element } from "../utils/element"
 
 export class PremiumPage {
     readonly page: Page;
@@ -22,23 +24,23 @@ export class PremiumPage {
 
     async getSectionByPosition(position: Number) {
         const sectionLocator = this.page.locator(`//section[@data-component-position="${position}"]`);
-
         return new Section(sectionLocator);
     }
 
     async getQuestionContainerByText(text: String) {
         const locator = this.page.locator(` //*[@data-sentry-element="QuestionContainer" and contains(string(), '${text}')]`);
-
         return new QuestionContainer(locator);
     }
 
     async getTooltipTriggerByText(text: string) {
         const locator = this.page.locator(`//span[@data-sentry-element="TooltipTrigger" and contains(text(), '${text}')]`);
-
         return locator;
     }
 
-
+    async getPremiumCardById(id: CardId) {
+        const locator = this.page.locator(`//div[@id="${id}"]`);
+        return new Element(locator);
+    }
 
 }
 

@@ -1,9 +1,9 @@
 import { Locator, expect } from "@playwright/test";
 
-export abstract class Element {
+export class Element {
     readonly locator: Locator;
 
-    protected constructor(locator: Locator) {
+    constructor(locator: Locator) {
         this.locator = locator;
     }
 

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { PremiumPage } from "../pages/PremiumPage";
-import {PremiumPlan} from "../utils/types";
+import {CardId, PremiumPlan} from "../utils/types";
 
 const pageUrl = `https://www.spotify.com/am/premium/`;
 let premiumPage: PremiumPage;
@@ -79,7 +79,7 @@ test.describe(`Navigation tests`, () => {
   })
 })
 
-test.describe(`Section snapshot tests`, () => {
+test.describe(`Snapshot tests`, () => {
   const sectionPositions: Number[] = [0, 1, 3];
 
   sectionPositions.forEach((position) => {
@@ -91,6 +91,20 @@ test.describe(`Section snapshot tests`, () => {
     });
 
   });
+
+  const subcriptionTypes: CardId[] = ['plan-premium-individual', 'plan-premium-duo', 'plan-premium-student', 'plan-premium-family'];
+
+  subcriptionTypes.forEach((id) => {
+    test(`subscription card: ${id}`, async () => {
+      const subscriptionCard = await premiumPage.getPremiumCardById(id);
+      const snapshotPath = ['subscriptionCards', `SubscriptionCard_${id}.png`];
+
+      await subscriptionCard.takeScreenshot(snapshotPath);
+    });
+
+  });
+
+
 })
 
 test.describe(`Behaviour tests`, () => {
