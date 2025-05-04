@@ -1,6 +1,7 @@
 import {Page, Locator} from "@playwright/test";
 import {Header} from "../components/Header";
-import {Section} from "../components/Section";
+import { Section} from "../components/Section";
+import {QuestionContainer} from "../components/QuestionContainer";
 
 export class PremiumPage {
     readonly page: Page;
@@ -22,6 +23,11 @@ export class PremiumPage {
         return new Section(sectionLocator);
     }
 
+    async getQuestionContainerByText(text: String) {
+        const locator = this.page.locator(` //*[@data-sentry-element="QuestionContainer" and contains(string(), '${text}')]`);
+
+        return new QuestionContainer(locator);
+    }
 
 }
 

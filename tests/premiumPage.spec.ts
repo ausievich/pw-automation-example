@@ -71,7 +71,7 @@ test.describe(`Navigation tests`, () => {
     await expect(page).toHaveURL(urlRegex);
   })
 
-  test.only(`view all plans button`, async ({ page }) => {
+  test(`view all plans button`, async ({ page }) => {
     const urlRegex = /.#plans.*/;
     await premiumPage.viewAllPlansButton.click();
 
@@ -94,6 +94,24 @@ test.describe(`Section snapshot tests`, () => {
 })
 
 test.describe(`Behaviour tests`, () => {
+  test(`open question`, async ({ page }) => {
+    const q = await premiumPage.getQuestionContainerByText('How much is Spotify Premium in Armenia?')
+
+    await q.questionTitle.click();
+
+    await expect(q.questionContent).toBeVisible();
+  })
+
+  test(`close question`, async ({ page }) => {
+    const q = await premiumPage.getQuestionContainerByText('How does the Spotify Premium trial work?')
+
+    await q.questionTitle.click();
+    await q.questionTitle.click();
+
+    await expect(q.questionContent).not.toBeVisible();
+  })
+
+
 
 
 })

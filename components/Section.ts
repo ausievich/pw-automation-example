@@ -7,9 +7,3 @@ export class Section extends Element {
     }
 }
 
-export class QuestionsSection extends Section {
-
-
-
-}
-

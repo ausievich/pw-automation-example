@@ -1,9 +1,9 @@
 import { Locator, expect } from "@playwright/test";
 
-export class Element {
+export abstract class Element {
     readonly locator: Locator;
 
-    constructor(locator: Locator) {
+    protected constructor(locator: Locator) {
         this.locator = locator;
     }
 
@@ -13,6 +13,10 @@ export class Element {
         });
 
         // Additional logic if required
+    }
+
+    async click() {
+        await this.locator.click();
     }
 
 }
