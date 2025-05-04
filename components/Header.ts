@@ -7,7 +7,7 @@ export class Header extends Element {
     readonly premiumLink: Locator;
     readonly supportLink: Locator;
     readonly downloadLink: Locator;
-    readonly premiumMenu: PremiumMenu;
+    readonly premiumMenu: Element;
 
     constructor(headerLocator: Locator) {
         super(headerLocator);
@@ -18,15 +18,7 @@ export class Header extends Element {
         this.supportLink = headerLocator.locator(`//a[@data-ga-action="help"]`);
         this.downloadLink = headerLocator.locator(`//a[@data-ga-action="download"]`);
 
-        this.premiumMenu = new PremiumMenu(headerLocator.locator(`//div[@id="premiumMenu"]`));
-
-    }
-
-}
-
-export class PremiumMenu extends Element {
-    constructor(locator: Locator) {
-        super(locator);
+        this.premiumMenu = new Element(headerLocator.locator(`//div[@id="premiumMenu"]`));
     }
 
     async clickLinkByName(premiumPlan: PremiumPlan){
@@ -34,4 +26,5 @@ export class PremiumMenu extends Element {
 
         await linkLocator.click();
     }
+
 }

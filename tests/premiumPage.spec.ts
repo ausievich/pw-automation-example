@@ -33,21 +33,6 @@ test.describe(`Navigation tests`, () => {
     await expect(page).toHaveURL(urlRegex);
   });
 
-  test(`header premium link menu displayed`, async () => {
-    await premiumPage.header.premiumLink.hover();
-
-    await expect(premiumPage.header.premiumMenu.locator).toBeVisible();
-  });
-
-  test(`header premium link menu snapshot`, async () => {
-    const premiumMenu = premiumPage.header.premiumMenu;
-    const snapshotPath = ['header', `PremiumMenu.png`];
-
-    await premiumPage.header.premiumLink.hover();
-
-    await premiumMenu.takeScreenshot(snapshotPath);
-  })
-
   const subscriptionPlans: { subscriptionPlan: PremiumPlan; urlRegex: RegExp }[] = [
     { subscriptionPlan: 'premium-family', urlRegex: /.family.*/ },
     { subscriptionPlan: 'premium-duo', urlRegex: /.duo.*/ },
@@ -58,7 +43,7 @@ test.describe(`Navigation tests`, () => {
   subscriptionPlans.forEach(({ subscriptionPlan, urlRegex }) => {
     test(`header premium link menu navigation: ${subscriptionPlan}`, async ({ page }) => {
       await premiumPage.header.premiumLink.hover();
-      await premiumPage.header.premiumMenu.clickLinkByName(subscriptionPlan);
+      await premiumPage.header.clickLinkByName(subscriptionPlan);
 
       await expect(page).toHaveURL(urlRegex);
     });
@@ -81,7 +66,6 @@ test.describe(`Navigation tests`, () => {
 
 test.describe(`Snapshot tests`, () => {
   const sectionPositions: Number[] = [0, 1, 3];
-
   sectionPositions.forEach((position) => {
     test(`screenshot section: position ${position}`, async () => {
       const section = await premiumPage.getSectionByPosition(position);
@@ -93,7 +77,6 @@ test.describe(`Snapshot tests`, () => {
   });
 
   const subcriptionTypes: CardId[] = ['plan-premium-individual', 'plan-premium-duo', 'plan-premium-student', 'plan-premium-family'];
-
   subcriptionTypes.forEach((id) => {
     test(`subscription card: ${id}`, async () => {
       const subscriptionCard = await premiumPage.getPremiumCardById(id);
@@ -104,6 +87,14 @@ test.describe(`Snapshot tests`, () => {
 
   });
 
+  test(`header premium link menu snapshot`, async () => {
+    const premiumMenu = premiumPage.header.premiumMenu;
+    const snapshotPath = ['header', `PremiumMenu.png`];
+
+    await premiumPage.header.premiumLink.hover();
+
+    await premiumMenu.takeScreenshot(snapshotPath);
+  })
 
 })
 
@@ -137,6 +128,11 @@ test.describe(`Behaviour tests`, () => {
 
 // TODO
 // add allure report
+// add localization tests
+// add s3 for snapshots
+// add telegram reporter
+// add small screens
+// add various browsers
 
 
 
